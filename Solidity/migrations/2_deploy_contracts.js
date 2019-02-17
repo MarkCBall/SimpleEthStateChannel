@@ -1,5 +1,5 @@
-var HelloWorld = artifacts.require("./HelloWorld.sol");
+var StateChannels = artifacts.require("./StateChannels.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(HelloWorld, "hello world");
+  deployer.deploy(StateChannels, "hello world");
 };
