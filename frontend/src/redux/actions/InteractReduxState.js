@@ -1,15 +1,24 @@
 import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
-
+import {isValidAddress} from "ethereumjs-util";
+//import web3 from "web3";
 
 export default {
 
     handleAddressChange: (dispatch,textString) => {
-        return (dispatch) =>
+        
+        return (dispatch) =>{
             dispatch({
                 type: CHANGE_ADDRESS_TEXT,
-                payload: textString
+                payload: {
+                    textString:textString,
+                    addressIsValid: isValidAddress(textString)
+                }
             })
-    },
+        }
+    }
+
+
+
     // calcAddress: (dispatch,msg, msgSig) => {
     //     return (dispatch, state) => {
     //         //code below from https://www.toptal.com/ethereum/one-click-login-flows-a-metamask-tutorial

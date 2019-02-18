@@ -2,20 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractReduxState from "../redux/actions/InteractReduxState";
 
+
 //mport { Button } from 'react-bootstrap';
 
 class Login extends Component {
-
-    //isValidAddress(){
-        // return etherJS call to check if this.props.address is a real eth address
-    //}
-    
-   
+  
 
     render() {
         return (
             <div>
-                Logged in with &nbsp;
+                {this.props.addressIsValid ? <>Logged in with </> : <>Enter valid address</> } &nbsp;
                 <input 
                     type="text" 
                     size="33"
@@ -23,8 +19,7 @@ class Login extends Component {
                     value={this.props.address}
                 />
 
-                {//isValidAddress().bind(this) ? Address is valid image : Address is invalid image    -- another tag for demo address
-                }
+                
 
                 <button
                     type="button"
@@ -41,6 +36,7 @@ class Login extends Component {
 function mapStateToProps(state) {
     return {
         address: state.InteractReduxState.addressSignedIn,
+        addressIsValid: state.InteractReduxState.addressIsValid
     }
 }
 
