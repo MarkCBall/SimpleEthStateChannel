@@ -22,6 +22,12 @@ router.post('/', function(req, res, next) {
     delete req.body.CID
     //should/could CID be sent in header?
 
+    db.put("pending"+req.body.u1Address,CID)
+    db.put("requested"+req.body.u2Address,CID)
+
+    // db.get("pending"+req.body.u1Address).then(console.log)
+    // console.log("pending"+req.body.u1Address)
+    db.get("pending0x111").then(console.log)
         
 //verify CID doesn't exist yet
 //verify that sig1 correlates to all given channel info
@@ -29,10 +35,13 @@ router.post('/', function(req, res, next) {
 //create a new entry at CID
 db.put(CID,req.body)
 
-    db.get(CID).then(console.log)
-
+    //db.get(CID).then(console.log)
   res.render('index', { title: 'Post completed correctly' });//clean this line later
 });
+
+
+
+
 
 router.get('/', async function(req, res, next) {
     //EXAMPLE req.body 
@@ -48,6 +57,23 @@ router.get('/', async function(req, res, next) {
 //router.delete('/', function(req, res, next) {
 //complete this later
 
+
+
+
+
+
+
+
+
+router.get('/pending', async function(req, res, next) {
+    var CIDs = await db.get("pending"+req.headers.address)
+    res.send(JSON.stringify(CIDs))
+});
+
+router.get('/requested', async function(req, res, next) {
+    var CIDs = await db.get("requested"+req.headers.address)
+    res.send(JSON.stringify(CIDs))
+});
 
 
 module.exports = router;
