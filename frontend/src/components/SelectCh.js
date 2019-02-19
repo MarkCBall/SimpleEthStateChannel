@@ -10,9 +10,13 @@ class SelectCh extends Component {
     render() {
         return (
             <div>
-                <button>CH1</button>
-                <button>CH5</button>
-                <button>CH36</button>
+                Pending your acceptance:<button className="btn btn-info btn-sm disabled">CH1</button>
+                <br/>
+                Pending other acceptance:<button className="btn btn-info btn-sm disabled">CH14</button>
+                <br/>
+                Ongoing:<button className="btn btn-info btn-sm active">CH5</button>
+                <br/>
+                Closing:<button className="btn btn-info btn-sm disabled">CH36</button>
 
                 
                 {//forEach call to blockchain, show channels

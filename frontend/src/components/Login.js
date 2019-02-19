@@ -27,9 +27,9 @@ class Login extends Component {
                     Get login address from MetaMask
                 </button>
                 <br/>
-                <button className="btn btn-info">Toggle Display</button>
-                <button className="btn btn-danger">Interact with blockchain</button>
-                <button className="btn btn-success">Interact with statechannel</button>
+                <button className="btn btn-info btn-sm">Toggle Display</button>
+                <button className="btn btn-danger btn-sm">Interact with blockchain</button>
+                <button className="btn btn-success btn-sm">Interact with statechannel</button>
                 <hr/>
             </div>
         );
