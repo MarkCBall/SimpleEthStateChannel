@@ -43,3 +43,23 @@ contract StateChannels {
         address calculatedProposingAddress = getOriginAddress(TxHash, v,r,s);
         require(channels[CID].u1address == calculatedProposingAddress || channels[CID].u1address == msg.sender);
         require(channels[CID].u2address == calculatedProposingAddress || channels[CID].u2address == msg.sender);
+
+        channels[CID].terminatingNonce = nonce;
+        channels[CID].terminatingBlockNum = proposedTerminatingBlockNumber;
+    }
+    
+    function TerminateChannel(uint CID) public{
+        require(block.number > channels[CID].terminatingBlockNum);
+        //do stuff not considered in out project
+        //uint u1Owes = u2InitialTokenBal - u2BalRetained;
+        //uint u2Owes = u1InitialTokenBal - u1BalRetained;
+        	//transfer u1Owes tokens from u1 to u2 (to be implemented later)
+    }
+    
+    function getOriginAddress(bytes32 signedMessage, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        bytes32 prefixedHash = keccak256(abi.encode(prefix, signedMessage));
+        return ecrecover(prefixedHash, v, r, s);
+    }
+    
+}

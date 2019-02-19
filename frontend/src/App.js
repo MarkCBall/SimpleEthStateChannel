@@ -29,8 +29,8 @@ class App extends Component {
                     
 
                     <ChRequested/><hr/>
-                    <ChOngoing/><hr/>
                     <ChProposed/><hr/>
+                    <ChOngoing/><hr/>
                     <ChTimingOut/><hr/>
                     <hr/>
                 

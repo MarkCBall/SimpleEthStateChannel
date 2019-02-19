@@ -10,7 +10,11 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "level": "^4.0.0",
+    "leveldown": "^4.0.1",
+    "levelup": "^4.0.0",
     "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "save": "^2.3.3"
   }
 }
