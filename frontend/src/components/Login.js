@@ -45,7 +45,6 @@ function mapDispatchToProps(dispatch) {
         handleAddressChange: (textString) => {
             dispatch(InteractReduxState.handleAddressChange(dispatch, textString.target.value))
         }
-
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
