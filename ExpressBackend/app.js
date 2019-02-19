@@ -4,12 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//WHAT IS CORS?
+var cors = require("cors");
+
 var ChannelRoute = require('./routes/Channel');
 var ChannelsRoute = require('./routes/Channels');
 //var usersRouter = require('./routes/users');
 
 
 var app = express();
+
+app.use(cors());///WHYYYYY?
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

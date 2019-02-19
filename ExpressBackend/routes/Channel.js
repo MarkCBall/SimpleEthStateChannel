@@ -9,7 +9,7 @@ var db = level('./db', {valueEncoding: 'json'})
 router.post('/', function(req, res, next) {
     //EXAMPLE req.body
     // {   "CID":1,
-    //     "u1Address":"0x111",
+    //     "u1Address":"0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
     //     "u2Address": "0x222",
     //     "u1TokenName": "Marks",
     //     "u2TokenName": "Matts",
@@ -27,7 +27,7 @@ router.post('/', function(req, res, next) {
 
     // db.get("pending"+req.body.u1Address).then(console.log)
     // console.log("pending"+req.body.u1Address)
-    db.get("pending0x111").then(console.log)
+    //db.get("pending0x111").then(console.log)
         
 //verify CID doesn't exist yet
 //verify that sig1 correlates to all given channel info
@@ -66,12 +66,14 @@ router.get('/', async function(req, res, next) {
 
 
 router.get('/pending', async function(req, res, next) {
-    var CIDs = await db.get("pending"+req.headers.address)
-    res.send(JSON.stringify(CIDs))
+    //var CIDs = await db.get("pending"+req.headers.address)
+    var CIDs = await db.get("pending0x111")
+    res.send({1:true});//JSON.stringify(CIDs))
 });
 
 router.get('/requested', async function(req, res, next) {
     var CIDs = await db.get("requested"+req.headers.address)
+    //WHAT FORM DOES THIS SEND DATA IN? {1:true, 2:true ect}???
     res.send(JSON.stringify(CIDs))
 });
 
