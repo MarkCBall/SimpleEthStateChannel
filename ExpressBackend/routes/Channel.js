@@ -19,7 +19,7 @@ router.post('/', async function(req, res, next) {
     // }
 
     var CID = req.body.CID
-    CID="0000000"+CID//pad CID as needed
+    //CID=CID//pad CID as needed
 
     delete req.body.CID//alternatively put CID in the header - better solution..
 
@@ -30,15 +30,15 @@ router.post('/', async function(req, res, next) {
     var requestedKey = await db.get("requested"+address2);
     //if pending == null or error, set to ""
 
-    console.log(pendingKey)
-    db.put("pending"+address1,pendingKey+CID)
-    db.put("requested"+address2,requestedKey+CID)
+    //console.log(pendingKey)
+    db.put("pending"+address1,{...pendingKey,[CID]:CID})
+    db.put("requested"+address2,{...requestedKey,[CID]:CID})
         
-//verify CID doesn't exist yet
-//verify that sig1 correlates to all given channel info
+    //verify CID doesn't exist yet
+    //verify that sig1 correlates to all given channel info
 
-//create a new entry at CID
-db.put(CID,req.body)
+    //create a new entry at CID
+    db.put(CID,req.body)
 
     //db.get(CID).then(console.log)
   res.render('index', { title: 'Post completed correctly' });//clean this line later
