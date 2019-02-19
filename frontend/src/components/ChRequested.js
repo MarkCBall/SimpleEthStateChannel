@@ -11,7 +11,7 @@ class ChRequested extends Component {
             <div>
                
                <InitialBalances/>
-               <button> If these terms are acceptable, countersign it and put on blockchain</button>
+               <button className="btn btn-danger"> If these terms are acceptable, countersign it and put on blockchain</button>
             </div>
         );
     }

@@ -17,17 +17,6 @@ import './App.css';
 
 class App extends Component {
 
-    renderChannel(){
-        var x = Math.random()*4
-        if(x<1)//state == blah blah
-            return <ChRequested/>
-        if(x<2)
-            return <ChOngoing/>
-        if(x<3)
-            return <ChProposed/>
-        return <ChTimingOut/>
-
-    }
 
     render() {
         return (
@@ -35,11 +24,15 @@ class App extends Component {
                 <div className="App">
                     <Login />
                     <SelectCh/>
-                    {this.renderChannel()}
                     {//alternaterender selector selectedChannel.type ==  Requested && <ChRequested/>
                     }
-                    <hr/>
+                    
 
+                    <ChRequested/><hr/>
+                    <ChOngoing/><hr/>
+                    <ChProposed/><hr/>
+                    <ChTimingOut/><hr/>
+                    <hr/>
                 
 
                 </div>
