@@ -10,7 +10,7 @@ class ChButton extends Component {
     render() {
         return (
                 <>
-                    {(this.props.CID == this.props.activeChannel) ?
+                    {(this.props.CID === this.props.activeChannel) ?
                         <button 
                             className="btn btn-info btn-sm active"
                             onClick={() => this.props.setActiveChannel(this.props.CID)}

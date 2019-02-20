@@ -6,7 +6,16 @@ import ChButton from "./ChButton";
 
 
 class SelectCh extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          ToggleDispNewCh: false
+        }
+    }
 
+    toggleDispNewCh(){
+        this.setState({ToggleDispNewCh:!this.state.ToggleDispNewCh})
+    }
 
     render() {
         return (
@@ -34,9 +43,15 @@ class SelectCh extends Component {
                 <button>CHx</button>
 
                 
-            
-
+                <br/>
+                <button className="btn btn-info" onClick={this.toggleDispNewCh.bind(this)}>Toggle Propose New Channel</button>
+                {this.state.ToggleDispNewCh &&
                 <ProposeNewCh/>
+                }
+
+                
+                <hr/>
+                <h1>Selected Channel: {this.props.activeChannel}</h1>
 
                 
             </div>
@@ -47,7 +62,8 @@ class SelectCh extends Component {
 function mapStateToProps(state) {
     return {
         PendingChannels: state.InteractDatabase.PendingChannels,
-        RequestedChannels: state.InteractDatabase.RequestedChannels
+        RequestedChannels: state.InteractDatabase.RequestedChannels,
+        activeChannel: state.InteractReduxState.activeChannel
     }
 }
 export default connect(mapStateToProps)(SelectCh);

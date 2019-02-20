@@ -1,27 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+
 
 
 class ProposeNewCh extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          ToggleDispNewCh: false
-        }
-    }
-
-    toggleDispNewCh(){
-        this.setState({ToggleDispNewCh:!this.state.ToggleDispNewCh})
-    }
-
     render() {
         return (
             <div>
                
-                <button className="btn btn-info" onClick={this.toggleDispNewCh.bind(this)}>Toggle Propose New Channel</button>
-
                 <br/>
-                {this.state.ToggleDispNewCh && <> 
+                
                     <form action="http://localhost:3001/Channel" method="post">
                         Enter CID <input type="text" name="CID"/><br/>
 
@@ -37,22 +24,11 @@ class ProposeNewCh extends Component {
                         Enter your address <input type="text" name="u1Address"/><br/>
 
                         Fill out Capcha to <input type="submit" value="Propose New Channel" className="btn btn-success"/>
-                    </form>
-                </>}
-
-                <h1>Selected Channel: {this.props.activeChannel}</h1>
-                <hr/>
+                    </form> 
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        activeChannel: state.InteractReduxState.activeChannel
-    }
-}
-export default connect(mapStateToProps)(ProposeNewCh);
-
-//export default ProposeNewCh;
+export default ProposeNewCh;
 

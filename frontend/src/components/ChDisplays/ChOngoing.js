@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 import CurrentBalances from "../ContractInfo/CurrentBalances";
 import InitialBalances from "../ContractInfo/InitialBalances";
+import ProposeNewTx from "../ProposeNewTx";
 
 class ChOngoing extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class ChOngoing extends Component {
     render() {
         return (
             <div>
-
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 <button className="btn btn-danger"> Initialize channel termination</button>
                 <div className="row line-above">
                     <div className="col-6 col-solid">
@@ -38,11 +39,9 @@ class ChOngoing extends Component {
 
                 <button className="btn btn-info" onClick={this.toggleDispNewTx.bind(this)}>Toggle Propose New Transaction</button>
                 <br/>
-                {this.state.ToggleDispNewTx && <> 
-                    Tx details:<input type="text" /><br/>
-                    More details<input type="text" />
-                    <button className="btn btn-success">Submit Transation</button>
-                </>}
+                {this.state.ToggleDispNewTx && 
+                    <ProposeNewTx/>
+                }
 
 
             </div>

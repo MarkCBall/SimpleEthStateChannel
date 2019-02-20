@@ -8,7 +8,7 @@ var logger = require('morgan');
 var cors = require("cors");
 
 var ChannelRoute = require('./routes/Channel');
-var ChannelsRoute = require('./routes/Channels');
+var TransactionRoute = require('./routes/Transaction');
 //var usersRouter = require('./routes/users');
 
 
@@ -27,8 +27,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/Channel', ChannelRoute);
-app.use('/Channels', ChannelsRoute);
-//app.use('/users', usersRouter);
+app.use('/Transaction', TransactionRoute);
+//one database initiated here or done individually in each route?
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

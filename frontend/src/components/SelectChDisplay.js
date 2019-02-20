@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import ChRequested from "./ChDisplays/ChRequested";
 import ChProposed from "./ChDisplays/ChProposed";
-// import ChOngoing from "./ChDisplays/ChOngoing";
-// import ChTimingOut from "./ChDisplays/ChTimingOut";
+import ChOngoing from "./ChDisplays/ChOngoing";
+import ChTimingOut from "./ChDisplays/ChTimingOut";
 
 
 
@@ -24,10 +24,10 @@ class SelectChDisplay extends Component {
                 }
 
 
-                {/* if on blockchain and latestnonce =0
+                {/* if on blockchain and latestnonce =0 */}
                 <ChOngoing/><hr/>
-                {/* if on blockchain and latestnonce >0 
-                <ChTimingOut/><hr/> */}
+                 {/* if on blockchain and latestnonce >0  */}
+                <ChTimingOut/><hr/>
                
   
             </div>
