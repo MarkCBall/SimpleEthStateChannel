@@ -1,7 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+
+// (async ()=>{
+//     db.close(db)
+// })()
+//level.repair('./db')
+
+
 var level = require('level')
+
 var db = level('./db', {valueEncoding: 'json'})
 
 
@@ -26,18 +34,33 @@ router.post('/', async function(req, res, next) {
     var address2 = req.body.u2Address;
 
     //if pending == null or error, set to ""
-    var pendingKey = await db.get("pending"+address1);
-    var requestedKey = await db.get("requested"+address2);
+    // var pendingKey = await db.get("pending"+address1);
+    // var requestedKey = await db.get("requested"+address2);
+
+    var pendingKey;
+    db.get("pending"+address1)
+    .then((res)=> {pendingKey = res;})
+    .catch((err) => {console.log(err);pendingKey = {};})
     
+    var requestedKey;
+    db.get("requested"+address1)
+    .then((res)=> {requestedKey = res;})
+    .catch((err) => {requestedKey = {};})
 
     db.put("pending"+address1,{...pendingKey,[CID]:CID})
+    .then(console.log("\n\npending success"))
+    .catch(console.log((err) => "\n\npending failed",err))
     db.put("requested"+address2,{...requestedKey,[CID]:CID})
+    .then(console.log("\n\nrequested success"))
+    .catch(console.log("\n\nrequested failed"))
         
     //verify CID doesn't exist yet
     //verify that sig1 correlates to all given channel info
 
     //create a new entry at CID
     db.put(CID,req.body)
+    .then(console.log("\n\n CIDput success"))
+    .catch(console.log("\n\n CIDput failed"))
 
     //db.get(CID).then(console.log)
   res.render('index', { title: 'Post completed correctly' });//clean this line later
@@ -78,9 +101,14 @@ router.get('/pending', async function(req, res, next) {
 });
 
 router.get('/requested', async function(req, res, next) {
-    var CIDs = await db.get("requested"+req.headers.address)
-    //WHAT FORM DOES THIS SEND DATA IN? {1:true, 2:true ect}???
-    res.send(JSON.stringify(CIDs))
+    db.get("requested"+req.headers.address)
+    .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
+    .catch((error) => res.send(JSON.stringify({1:1}))  )
+    //handle the errors in a better way?
+
+    // var CIDs = await db.get("requested"+req.headers.address)
+    // //WHAT FORM DOES THIS SEND DATA IN? {1:true, 2:true ect}???
+    // res.send(JSON.stringify(CIDs))
 });
 
 
