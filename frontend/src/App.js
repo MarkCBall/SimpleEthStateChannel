@@ -7,10 +7,12 @@ import React, { Component } from "react";
 
 import Login from "./components/Login";
 import SelectCh from "./components/SelectCh";
-import ChRequested from "./components/ChRequested";
-import ChOngoing from "./components/ChOngoing";
-import ChTimingOut from "./components/ChTimingOut";
-import ChProposed from "./components/ChProposed";
+import SelectChDisplay from "./components/SelectChDisplay";
+
+// import ChRequested from "./components/ChRequested";
+// import ChOngoing from "./components/ChOngoing";
+// import ChTimingOut from "./components/ChTimingOut";
+// import ChProposed from "./components/ChProposed";
 
 import './App.css';
 
@@ -24,15 +26,7 @@ class App extends Component {
                 <div className="App">
                     <Login />
                     <SelectCh/>
-                    {//alternaterender selector selectedChannel.type ==  Requested && <ChRequested/>
-                    }
-                    
-
-                    <ChRequested/><hr/>
-                    <ChProposed/><hr/>
-                    <ChOngoing/><hr/>
-                    <ChTimingOut/><hr/>
-                    <hr/>
+                    <SelectChDisplay/>
                 
 
                 </div>

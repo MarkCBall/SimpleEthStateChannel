@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 
 class ProposeNewCh extends Component {
@@ -40,12 +40,19 @@ class ProposeNewCh extends Component {
                     </form>
                 </>}
 
-
+                <h1>Selected Channel: {this.props.activeChannel}</h1>
                 <hr/>
             </div>
         );
     }
 }
 
-export default ProposeNewCh;
+function mapStateToProps(state) {
+    return {
+        activeChannel: state.InteractReduxState.activeChannel
+    }
+}
+export default connect(mapStateToProps)(ProposeNewCh);
+
+//export default ProposeNewCh;
 

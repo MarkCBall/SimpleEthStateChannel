@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import ProposeNewCh from "./ProposeNewCh";
+import ChButton from "./ChButton";
 
 
 class SelectCh extends Component {
@@ -15,17 +16,14 @@ class SelectCh extends Component {
 
                 Pending your acceptance:
                 {Object.keys(this.props.RequestedChannels).map(obj => {
-                        return <div key={obj}>
-                            <button className="btn btn-info btn-sm disabled">CH{obj}</button>
-                        </div>
+                        return <ChButton key={obj} channel={obj}/>
                         })
                     }
                 <br/>
+
                 Pending other acceptance:
                 {Object.keys(this.props.PendingChannels).map(obj => {
-                    return <div key={obj}>
-                        <button className="btn btn-info btn-sm disabled">CH{obj}</button>
-                    </div>
+                    return <ChButton key={obj} channel={obj}/>
                     })
                 }
                 <br/>
@@ -39,6 +37,7 @@ class SelectCh extends Component {
             
 
                 <ProposeNewCh/>
+
                 
             </div>
         );
