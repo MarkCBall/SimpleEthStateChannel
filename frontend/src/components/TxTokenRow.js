@@ -5,7 +5,7 @@ import React, { Component } from "react";
 class TxTokenRow extends Component {
 
     counterpartyBal = () => {
-        return this.props.total - this.props.bal;
+        return (this.props.total - this.props.yourBal);
     }
 
     render() {
@@ -15,7 +15,7 @@ class TxTokenRow extends Component {
                     {this.props.tokenName}
                 </div>
                 <div className="col-2 col-solid">
-                    {this.props.bal}
+                    {this.props.yourBal}
                 </div>
                 <div className="col-2 col-solid">
                     {this.counterpartyBal()}
