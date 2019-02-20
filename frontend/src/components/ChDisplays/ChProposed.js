@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import { connect } from "react-redux";
-import InitialBalances from "./ContractInfo/InitialBalances";
+import InitialBalances from "../ContractInfo/InitialBalances";
 
 
 class ChProposed extends Component {

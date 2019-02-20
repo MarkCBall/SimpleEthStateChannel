@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import ChRequested from "./ChRequested";
-import ChOngoing from "./ChOngoing";
-import ChTimingOut from "./ChTimingOut";
-import ChProposed from "./ChProposed";
+import ChRequested from "./ChDisplays/ChRequested";
+import ChOngoing from "./ChDisplays/ChOngoing";
+import ChTimingOut from "./ChDisplays/ChTimingOut";
+import ChProposed from "./ChDisplays/ChProposed";
 
 
 class SelectChDisplay extends Component {
@@ -15,13 +15,15 @@ class SelectChDisplay extends Component {
         return (
             <div>
 
-                {//alternaterender selector selectedChannel.type ==  Requested && <ChRequested/>
-                    //put all these into component called SelectDisplay
+              
+                {(this.props.ChDetails.chType === "requested") &&
+                    <ChRequested/>
                 }
-                {/* if sig 1 is blank */}
-                <ChRequested/><hr/>
-                {/* if sig2 is blank */}
-                <ChProposed/><hr/>
+                {(this.props.ChDetails.chType === "proposed") &&
+                    <ChProposed/>
+                }
+
+
                 {/* if on blockchain and latestnonce =0 */}
                 <ChOngoing/><hr/>
                 {/* if on blockchain and latestnonce >0 */}
@@ -35,10 +37,13 @@ class SelectChDisplay extends Component {
 
 function mapStateToProps(state) {
     return {
-        activeChannel: state.InteractReduxState.activeChannel
+        activeChannel: state.InteractReduxState.activeChannel,
+        ChDetails: state.InteractDatabase.ActiveChannelDetails
     }
 }
 export default connect(mapStateToProps)(SelectChDisplay);
 
 //export default ProposeNewCh;
+
+
 

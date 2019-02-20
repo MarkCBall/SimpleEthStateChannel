@@ -16,14 +16,14 @@ class SelectCh extends Component {
 
                 Pending your acceptance:
                 {Object.keys(this.props.RequestedChannels).map(obj => {
-                        return <ChButton key={obj} channel={obj}/>
+                        return <ChButton key={obj} CID={obj}/>
                         })
                     }
                 <br/>
 
                 Pending other acceptance:
                 {Object.keys(this.props.PendingChannels).map(obj => {
-                    return <ChButton key={obj} channel={obj}/>
+                    return <ChButton key={obj} CID={obj}/>
                     })
                 }
                 <br/>

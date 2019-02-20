@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import { connect } from "react-redux";
 
 
-import CurrentBalances from "./ContractInfo/CurrentBalances";
+import CurrentBalances from "../ContractInfo/CurrentBalances";
 
 
 class ChTimingOut extends Component {

@@ -18,7 +18,6 @@ export default {
         }
     },
     setActiveChannel:(dispatch,channel) => {
-        //hold all the channel stats in this function too
         return (dispatch) =>{
             dispatch({
                 type: SET_ACTIVE_CHANNEL,

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 //import { connect } from "react-redux";
 
-import CurrentBalances from "./ContractInfo/CurrentBalances";
-import InitialBalances from "./ContractInfo/InitialBalances";
+import CurrentBalances from "../ContractInfo/CurrentBalances";
+import InitialBalances from "../ContractInfo/InitialBalances";
 
 class ChOngoing extends Component {
     constructor(props) {

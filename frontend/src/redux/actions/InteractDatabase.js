@@ -1,5 +1,6 @@
 import { GET_PENDING_CHANNELS } from "../constants/InteractDatabase";
 import { GET_REQUESTED_CHANNELS } from "../constants/InteractDatabase";
+import { GET_CHANNEL_DETAILS } from "../constants/InteractDatabase";
 
 export default {
 
@@ -40,6 +41,34 @@ export default {
         }
     },
 
+    getChannelDetails:(dispatch, CID) => {
+        return (dispatch, getState) => {
+            var addressSignedIn = getState().InteractReduxState.addressSignedIn;
+            fetch("http://localhost:3001/Channel/", {
+                method: "GET",
+                mode: "cors", 
+                headers: {
+                    "cid":CID
+                }
+            }).then((response) =>{
+                return response.json()
+            }).then((response) => {
+                var chType = "";
+                if (addressSignedIn === response.u1Address)
+                    chType = "proposed";
+                else if (addressSignedIn === response.u2Address)
+                    chType = "requested";
 
-
+                dispatch({
+                    type: GET_CHANNEL_DETAILS,
+                    payload: {
+                        ...response,
+                        chType:chType
+                    }
+                    //add in channel type pending/requested
+                })
+            })
+        }
+    },
+   
 }
