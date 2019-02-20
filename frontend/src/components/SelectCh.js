@@ -30,8 +30,8 @@ class SelectCh extends Component {
 
 
                 
-                Ongoing/Closing:<button className="btn btn-info btn-sm active">CH5</button>
-                <button className="btn btn-info btn-sm disabled">CH36</button>
+                Ongoing/Closing:<button >CHx</button>
+                <button>CHx</button>
 
                 
             

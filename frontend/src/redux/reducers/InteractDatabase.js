@@ -4,8 +4,8 @@ import { GET_CHANNEL_DETAILS } from "../constants/InteractDatabase";
 
 
 const initialState = {
-    PendingChannels: { "demo": "demo" },
-    RequestedChannels: { "demo": "demo" },
+    PendingChannels: { },
+    RequestedChannels: { },
     ActiveChannelDetails:{}//put some defaults here?
 };
 
@@ -20,7 +20,7 @@ export default function (state = initialState, action) {
             return { ...state, RequestedChannels: action.payload }
 
         case GET_CHANNEL_DETAILS:
-        //console.log(action.payload)
+            //console.log(action.payload)
             return { ...state, ActiveChannelDetails: action.payload }
 
         default:

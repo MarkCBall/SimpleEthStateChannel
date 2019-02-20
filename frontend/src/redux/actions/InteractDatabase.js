@@ -53,19 +53,18 @@ export default {
             }).then((response) =>{
                 return response.json()
             }).then((response) => {
-                var chType = "";
+                var ChType = "";
                 if (addressSignedIn === response.u1Address)
-                    chType = "proposed";
+                    ChType = "proposed";
                 else if (addressSignedIn === response.u2Address)
-                    chType = "requested";
+                    ChType = "requested";
 
                 dispatch({
                     type: GET_CHANNEL_DETAILS,
                     payload: {
                         ...response,
-                        chType:chType
+                        ChType:ChType
                     }
-                    //add in channel type pending/requested
                 })
             })
         }

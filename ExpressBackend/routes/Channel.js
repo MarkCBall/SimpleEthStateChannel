@@ -71,11 +71,15 @@ router.get('/', async function(req, res, next) {
     //EXAMPLE req.body 
     //{cid:1}
     var CID = req.headers.cid
-    //res.setHeader('Content-Type', 'application/json');
-    var dbData = await db.get(CID);
-    //TODO -- if dbData has error, handle error
+    //var dbData = await db.get(CID);
+    db.get(CID)
+    .then((dbres) => res.send(dbres))
+    .catch((err) => {
+        res.send({});
+        console.log(err)
+    })
 
-    res.send(dbData)
+    //res.send(dbData)
 });
 
 //router.delete('/', function(req, res, next) {
@@ -92,7 +96,7 @@ router.get('/', async function(req, res, next) {
 router.get('/pending', async function(req, res, next) {
     db.get("pending"+req.headers.address)
     .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
-    .catch((error) => res.send(JSON.stringify({"demo":"demo"}))  )
+    .catch((error) => res.send(JSON.stringify({}))  )
     //handle the errors in a better way?
     
 });
@@ -100,7 +104,7 @@ router.get('/pending', async function(req, res, next) {
 router.get('/requested', async function(req, res, next) {
     db.get("requested"+req.headers.address)
     .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
-    .catch((error) => res.send(JSON.stringify({"demo":"demo"}))  )
+    .catch((error) => res.send(JSON.stringify({}))  )
     //handle the errors in a better way?
 
     // var CIDs = await db.get("requested"+req.headers.address)

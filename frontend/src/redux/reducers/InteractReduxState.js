@@ -3,9 +3,9 @@ import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 
 
 const initialState = {
-  addressSignedIn: "1",//"0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
+  addressSignedIn: "",//"0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
   addressIsValid:true,
-  activeChannel:0
+  activeChannel:-1
 };
 
 export default function(state = initialState, action) {

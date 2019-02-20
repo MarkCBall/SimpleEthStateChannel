@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import ChRequested from "./ChDisplays/ChRequested";
-import ChOngoing from "./ChDisplays/ChOngoing";
-import ChTimingOut from "./ChDisplays/ChTimingOut";
 import ChProposed from "./ChDisplays/ChProposed";
+// import ChOngoing from "./ChDisplays/ChOngoing";
+// import ChTimingOut from "./ChDisplays/ChTimingOut";
+
 
 
 class SelectChDisplay extends Component {
@@ -15,20 +16,19 @@ class SelectChDisplay extends Component {
         return (
             <div>
 
-              
-                {(this.props.ChDetails.chType === "requested") &&
+                {(this.props.ChDetails.ChType === "requested") &&
                     <ChRequested/>
                 }
-                {(this.props.ChDetails.chType === "proposed") &&
+                {(this.props.ChDetails.ChType === "proposed") &&
                     <ChProposed/>
                 }
 
 
-                {/* if on blockchain and latestnonce =0 */}
+                {/* if on blockchain and latestnonce =0
                 <ChOngoing/><hr/>
-                {/* if on blockchain and latestnonce >0 */}
-                <ChTimingOut/><hr/>
-                <hr/>
+                {/* if on blockchain and latestnonce >0 
+                <ChTimingOut/><hr/> */}
+               
   
             </div>
         );

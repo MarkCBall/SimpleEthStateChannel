@@ -38,6 +38,7 @@ function mapStateToProps(state) {
 // u2Address: "1"
 // u2InitialTokenBal: "1"
 // u2TokenName: "1"
+//ChType
 
 export default connect(mapStateToProps)(InitialBalances);
 

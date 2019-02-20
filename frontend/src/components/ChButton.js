@@ -9,19 +9,31 @@ class ChButton extends Component {
 
     render() {
         return (
-                <button 
-                    className="btn btn-info btn-sm disabled"
-                    onClick={() => this.props.setActiveChannel(this.props.CID)}
-                >
-                    CH{this.props.CID}
-                </button>
+                <>
+                    {(this.props.CID == this.props.activeChannel) ?
+                        <button 
+                            className="btn btn-info btn-sm active"
+                            onClick={() => this.props.setActiveChannel(this.props.CID)}
+                        >
+                            CH{this.props.CID}
+                        </button>
+                    :
+                        <button 
+                            className="btn btn-info btn-sm disabled"
+                            onClick={() => this.props.setActiveChannel(this.props.CID)}
+                        >
+                            CH{this.props.CID}
+                        </button>
+                    }
+                </>
+
         );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        // activeChannel: state.InteractReduxState.activeChannel
+        activeChannel: state.InteractReduxState.activeChannel
     }
 }
 function mapDispatchToProps(dispatch) {
