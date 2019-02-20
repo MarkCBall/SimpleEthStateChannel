@@ -19,18 +19,17 @@ router.post('/', async function(req, res, next) {
     // }
 
     var CID = req.body.CID
-    //CID=CID//pad CID as needed
 
     delete req.body.CID//alternatively put CID in the header - better solution..
 
     var address1 = req.body.u1Address;
     var address2 = req.body.u2Address;
 
+    //if pending == null or error, set to ""
     var pendingKey = await db.get("pending"+address1);
     var requestedKey = await db.get("requested"+address2);
-    //if pending == null or error, set to ""
+    
 
-    //console.log(pendingKey)
     db.put("pending"+address1,{...pendingKey,[CID]:CID})
     db.put("requested"+address2,{...requestedKey,[CID]:CID})
         
@@ -71,11 +70,11 @@ router.get('/', async function(req, res, next) {
 
 
 router.get('/pending', async function(req, res, next) {
-    //var CIDs = await db.get("pending"+req.headers.address)
-    var CIDs = await db.get("pending"+req.headers.address)
-    console.log(CIDs)
-    //res.send({1:true});//JSON.stringify(CIDs))
-    res.send(JSON.stringify(CIDs))
+    db.get("pending"+req.headers.address)
+    .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
+    .catch((error) => res.send(JSON.stringify({1:1}))  )
+    //handle the errors in a better way?
+    
 });
 
 router.get('/requested', async function(req, res, next) {
