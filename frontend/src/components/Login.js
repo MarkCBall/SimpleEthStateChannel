@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractReduxState from "../redux/actions/InteractReduxState";
+import InteractDatabase from "../redux/actions/InteractDatabase";
 
 
 //mport { Button } from 'react-bootstrap';
@@ -40,7 +41,8 @@ class Login extends Component {
 function mapStateToProps(state) {
     return {
         address: state.InteractReduxState.addressSignedIn,
-        addressIsValid: state.InteractReduxState.addressIsValid
+        addressIsValid: state.InteractReduxState.addressIsValid,
+        pendingChannels: state.InteractDatabase.PendingChannels
     }
 }
 
@@ -48,6 +50,9 @@ function mapDispatchToProps(dispatch) {
     return {
         handleAddressChange: (textString) => {
             dispatch(InteractReduxState.handleAddressChange(dispatch, textString.target.value))
+            dispatch(InteractDatabase.getPendingChannels(dispatch, textString.target.value))
+            dispatch(InteractDatabase.getRequestedChannels(dispatch, textString.target.value))
+            //call the interact database from interact reduxstate?
         }
     }
 }

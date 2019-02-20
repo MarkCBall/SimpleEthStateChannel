@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 import ProposeNewCh from "./ProposeNewCh";
 
@@ -10,17 +10,33 @@ class SelectCh extends Component {
     render() {
         return (
             <div>
-                Pending your acceptance:<button className="btn btn-info btn-sm disabled">CH1</button>
+                {/* <button onClick={() => console.log(this.props.PendingChannels)}>ConsolelogState</button><br/> */}
+
+
+                Pending your acceptance:
+                {Object.keys(this.props.RequestedChannels).map(obj => {
+                        return <div key={obj}>
+                            <button className="btn btn-info btn-sm disabled">CH{obj}</button>
+                        </div>
+                        })
+                    }
                 <br/>
-                Pending other acceptance:<button className="btn btn-info btn-sm disabled">CH14</button>
+                Pending other acceptance:
+                {Object.keys(this.props.PendingChannels).map(obj => {
+                    return <div key={obj}>
+                        <button className="btn btn-info btn-sm disabled">CH{obj}</button>
+                    </div>
+                    })
+                }
                 <br/>
+
+
+                
                 Ongoing/Closing:<button className="btn btn-info btn-sm active">CH5</button>
                 <button className="btn btn-info btn-sm disabled">CH36</button>
 
                 
-                {//forEach call to blockchain, show channels
-                //forEach call to requested/proposed in database, show channels
-                }
+            
 
                 <ProposeNewCh/>
                 
@@ -29,5 +45,16 @@ class SelectCh extends Component {
     }
 }
 
-export default SelectCh;
+function mapStateToProps(state) {
+    return {
+        PendingChannels: state.InteractDatabase.PendingChannels,
+        RequestedChannels: state.InteractDatabase.RequestedChannels
+    }
+}
+export default connect(mapStateToProps)(SelectCh);
+
+
+
+
+//export default SelectCh;
 

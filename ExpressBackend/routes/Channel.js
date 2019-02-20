@@ -10,7 +10,7 @@ var router = express.Router();
 
 var level = require('level')
 
-var db = level('./db', {valueEncoding: 'json'})
+var db = level('./dbb', {valueEncoding: 'json'})
 
 
 
@@ -33,9 +33,7 @@ router.post('/', async function(req, res, next) {
     var address1 = req.body.u1Address;
     var address2 = req.body.u2Address;
 
-    //if pending == null or error, set to ""
-    // var pendingKey = await db.get("pending"+address1);
-    // var requestedKey = await db.get("requested"+address2);
+
 
     var pendingKey;
     db.get("pending"+address1)
@@ -48,21 +46,20 @@ router.post('/', async function(req, res, next) {
     .catch((err) => {requestedKey = {};})
 
     db.put("pending"+address1,{...pendingKey,[CID]:CID})
-    .then(console.log("\n\npending success"))
-    .catch(console.log((err) => "\n\npending failed",err))
+    //.then(console.log("\n\npending success"))
+    .catch((err) => console.log("\n\npending failed",err))
     db.put("requested"+address2,{...requestedKey,[CID]:CID})
-    .then(console.log("\n\nrequested success"))
-    .catch(console.log("\n\nrequested failed"))
+    //.then(console.log("\n\nrequested success"))
+    .catch((err) => console.log("\n\nrequested failed",err))
         
     //verify CID doesn't exist yet
     //verify that sig1 correlates to all given channel info
 
     //create a new entry at CID
     db.put(CID,req.body)
-    .then(console.log("\n\n CIDput success"))
-    .catch(console.log("\n\n CIDput failed"))
+    //.then(console.log("\n\n CIDput success"))
+    .catch((err) => console.log("\n\n CIDput failed",err))
 
-    //db.get(CID).then(console.log)
   res.render('index', { title: 'Post completed correctly' });//clean this line later
 });
 
@@ -95,7 +92,7 @@ router.get('/', async function(req, res, next) {
 router.get('/pending', async function(req, res, next) {
     db.get("pending"+req.headers.address)
     .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
-    .catch((error) => res.send(JSON.stringify({1:1}))  )
+    .catch((error) => res.send(JSON.stringify({"demo":"demo"}))  )
     //handle the errors in a better way?
     
 });
@@ -103,7 +100,7 @@ router.get('/pending', async function(req, res, next) {
 router.get('/requested', async function(req, res, next) {
     db.get("requested"+req.headers.address)
     .then((CIDs) => { res.send(JSON.stringify(CIDs))}   )
-    .catch((error) => res.send(JSON.stringify({1:1}))  )
+    .catch((error) => res.send(JSON.stringify({"demo":"demo"}))  )
     //handle the errors in a better way?
 
     // var CIDs = await db.get("requested"+req.headers.address)
