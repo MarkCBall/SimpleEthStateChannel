@@ -6,10 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 
 #leveldb data
-/ExpressBackend/db
 *.ldb
-/ExpressBackend/db*
-/ExpressBackend/dbTransactions/*
+ExpressBackend/dbb/
+ExpressBackend/dbTransactions/
 db*
 
 

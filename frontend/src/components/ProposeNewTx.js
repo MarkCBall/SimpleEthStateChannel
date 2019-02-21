@@ -23,16 +23,6 @@ class ProposeNewTx extends Component {
         return this.props.u1Address === this.props.addressSignedIn
     }
 
-    // getMyTokenName = () => {
-    //     return userOneIsMe() ? this.props.u1TokenName : this.props.u2TokenName
-
-    // }
-    // getCounterpartyTokenName = () => {
-    //     if (this.props.u1Address === this.props.addressSignedIn)
-    //         return this.props.u2TokenName
-    //     return this.props.u1TokenName
-    // }
-
     SubmitAndSign = () => {
         var body;
         if (this.userOneIsMe()){
@@ -49,7 +39,6 @@ class ProposeNewTx extends Component {
                 u2Bal:this.state.MyTokenTx
             }
         }
-        //console.log("body is",body)
         fetch("http://localhost:3001/Transaction/new", {
                 method: "POST",
                 mode: "cors",
@@ -62,15 +51,11 @@ class ProposeNewTx extends Component {
             .then("success",console.log)
             .catch("failure",console.log)
 
-        //call to the database
     }
 
     render() {
         return (
-            <div>
-
-                {/* <button onClick={()=>console.log(this.props.u1TokenName)}>clickme</button> */}
-                
+            <div>               
                     
                     You are trading 
                     <input 
@@ -92,14 +77,6 @@ class ProposeNewTx extends Component {
                     <button onClick={() => this.SubmitAndSign()}> submit and sign</button>
                     <br/>
 
-
-
-                {/* </div> */}
-
-
-                {/* Your balance is:-37- -Marks- tokens ... Proposed new Balance <input type="text" /><br/><br/>
-                Counterparty balance is:-13- -Matt- tokens ... Proposed new Balance <input type="text" /><br/><br/> 
-                <button className="btn btn-success">Submit and sign Transation</button>*/}
             </div>
         );
     }
@@ -112,7 +89,6 @@ function mapStateToProps(state) {
         u1TokenName: state.InteractDatabase.ActiveChannelDetails.u1TokenName,
         u2TokenName: state.InteractDatabase.ActiveChannelDetails.u2TokenName,
         u1Address : state.InteractDatabase.ActiveChannelDetails.u1Address
-        //do stuff here to pull in token names for the channel specified
     }
 }
 export default connect(mapStateToProps)(ProposeNewTx);

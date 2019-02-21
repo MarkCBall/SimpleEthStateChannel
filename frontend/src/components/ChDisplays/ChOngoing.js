@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 import CurrentBalances from "../ContractInfo/CurrentBalances";
 import InitialBalances from "../ContractInfo/InitialBalances";
+import CountersignTx from "../CountersignTx";
 import ProposeNewTx from "../ProposeNewTx";
 
 class ChOngoing extends Component {
@@ -34,8 +35,15 @@ class ChOngoing extends Component {
                 </div>
 
                 <br/><br/>
-                You may sign the following transaction: xxxxxx <button className="btn btn-success">countersign</button>
+
+                <CountersignTx/>
+                
+                
+                
+                
                 <br/><br/>
+
+
 
                 <button className="btn btn-info" onClick={this.toggleDispNewTx.bind(this)}>Toggle Propose New Transaction</button>
                 <br/>

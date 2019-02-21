@@ -40,7 +40,8 @@ function mapDispatchToProps(dispatch) {
     return {
         setActiveChannel: (CID) => {
             dispatch(InteractReduxState.setActiveChannel(dispatch, CID));
-            dispatch(InteractDatabase.getChannelDetails(dispatch,CID))
+            dispatch(InteractDatabase.getChannelDetails(dispatch,CID));
+            dispatch(InteractDatabase.getHighestNonce(dispatch,CID));
         }
     }
 }

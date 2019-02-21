@@ -50,7 +50,7 @@ router.get('/HighestNonce', async function(req, res, next) {
 });
 
 router.get('/getTx', async function(req, res, next) {
-    //EXAMPLE req.header {CID:5, nonce:2}
+    //EXAMPLE req.header {cid:5, nonce:2}
     var CID = req.headers.cid;
     var nonce = req.headers.nonce;
     console.log(CID,"xx",nonce)
