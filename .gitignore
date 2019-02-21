@@ -12,7 +12,8 @@ ExpressBackend/dbTransactions/
 ExpressBackend/db/
 ExpressBackend/db*
 
-
+#solidity build
+Solidity/build/
 
 # Runtime data
 pids

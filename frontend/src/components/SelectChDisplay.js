@@ -27,7 +27,7 @@ class SelectChDisplay extends Component {
                 {/* if on blockchain and latestnonce =0 */}
                 <ChOngoing/><hr/>
                  {/* if on blockchain and latestnonce >0  */}
-                <ChTimingOut/><hr/>
+                {/* <ChTimingOut/><hr/> */}
                
   
             </div>

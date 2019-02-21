@@ -16,23 +16,21 @@ contract StateChannels {
 	mapping (uint => channelDetails) public channels;
 	mapping (address => uint[]) public channelsAtAddress;
 
-    function CreateChannel(bytes memory sig1, uint CID, address u1Address, string memory u1TokenName, string memory u2TokenName, uint u1InitialTokenBal, uint u2InitialTokenBal) public{
+    function CreateChannel(uint8 v1, bytes32 r1, bytes32 s1, uint CID, address u1Address, string memory u1TokenName, string memory u2TokenName, uint u1InitialTokenBal, uint u2InitialTokenBal) public{
         //require CID is not already in the smart contract
         require(channels[CID].u1Address != address(0));
         address u2Address = msg.sender;
         //require that sig1 correlates to all the data above
         bytes32 ChHash = keccak256(abi.encode(CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal));
-    //uint 8 v =...;
-    //bytes32 r =...;
-    //bytes32 s =...;
-        address calculatedProposingAddress = getOriginAddress(ChHash, v,r,s);
+
+        address calculatedProposingAddress = getOriginAddress(ChHash, v1,r1,s1);
         require(calculatedProposingAddress == u1Address);
         //put the given data into the contract
         channels[CID]=channelDetails(u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal,0,0);
     }
     
-    function InitChannelTermination(uint CID, bytes memory sig, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
-        require(msg.sender == channels[CID].u1address || msg.sender == channels[CID].u2address);
+    function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
+        require(msg.sender == channels[CID].u1Address || msg.sender == channels[CID].u2Address);
         require((proposedTerminatingBlockNumber - 5760) > block.number); 
         require(nonce > channels[CID].terminatingNonce);
         // check sig verifies balances and nonce to the other address
@@ -41,14 +39,14 @@ contract StateChannels {
     //bytes32 r =...;
     //bytes32 s =...;
         address calculatedProposingAddress = getOriginAddress(TxHash, v,r,s);
-        require(channels[CID].u1address == calculatedProposingAddress || channels[CID].u1address == msg.sender);
-        require(channels[CID].u2address == calculatedProposingAddress || channels[CID].u2address == msg.sender);
+        require(channels[CID].u1Address == calculatedProposingAddress || channels[CID].u1Address == msg.sender);
+        require(channels[CID].u2Address == calculatedProposingAddress || channels[CID].u2Address == msg.sender);
 
         channels[CID].terminatingNonce = nonce;
         channels[CID].terminatingBlockNum = proposedTerminatingBlockNumber;
     }
     
-    function TerminateChannel(uint CID) public{
+    function TerminateChannel(uint CID) view public{
         require(block.number > channels[CID].terminatingBlockNum);
         //do stuff not considered in out project
         //uint u1Owes = u2InitialTokenBal - u2BalRetained;
