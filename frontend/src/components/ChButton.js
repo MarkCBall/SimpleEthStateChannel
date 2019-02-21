@@ -42,6 +42,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(InteractReduxState.setActiveChannel(dispatch, CID));
             dispatch(InteractDatabase.getChannelDetails(dispatch,CID));
             dispatch(InteractDatabase.getHighestNonce(dispatch,CID));
+            dispatch(InteractDatabase.getHighestSignedNonce(dispatch,CID));
         }
     }
 }

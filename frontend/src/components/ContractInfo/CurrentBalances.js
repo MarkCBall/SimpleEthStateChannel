@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 
 class CurrentBalances extends Component {
@@ -9,13 +9,26 @@ class CurrentBalances extends Component {
         return (
             <div>
 
-                Latest countersigned Nonce: 13<br />
-                0x78349 has 24 Mark Tokens and 13 Matt Tokens<br/>
-                0x09763 has 17 Matt Tokens and 26 Mark tokens<br/>
+                Latest countersigned Nonce: {this.props.HighestSignedNonce}<br/>
+                address1 has {this.props.u1Bal} xx Tokens and origBal- yy Tokens<br/>
+                address2 has {this.props.u2Bal} yy Tokens and origBal- xx tokens<br/>
             
             </div>
         );
     }
 }
 
-export default CurrentBalances;
+
+function mapStateToProps(state) {
+    return {
+        HighestSignedNonce: state.InteractDatabase.HighestSignedNonce,
+        //LatestSignedTxDetails: state.InteractDatabase.LatestSignedTxDetails.u1Bal
+        u1Bal: state.InteractDatabase.LatestSignedTxDetails.u1Bal,
+        u2Bal: state.InteractDatabase.LatestSignedTxDetails.u2Bal
+    }
+}
+
+export default connect( mapStateToProps)(CurrentBalances);
+
+
+

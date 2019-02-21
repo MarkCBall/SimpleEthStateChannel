@@ -74,7 +74,7 @@ class ProposeNewTx extends Component {
                     />&nbsp;
                     {this.userOneIsMe() ? this.props.u2TokenName : this.props.u1TokenName}
                     &nbsp; tokens &nbsp;
-                    <button onClick={() => this.SubmitAndSign()}> submit and sign</button>
+                    <button className="btn btn-success" onClick={() => this.SubmitAndSign()}> submit and sign</button>
                     <br/>
 
             </div>

@@ -3,6 +3,8 @@ import { GET_REQUESTED_CHANNELS } from "../constants/InteractDatabase";
 import { GET_CHANNEL_DETAILS } from "../constants/InteractDatabase";
 import { GET_HIGHEST_NONCE } from "../constants/InteractDatabase";
 import { GET_LATEST_TX } from "../constants/InteractDatabase";
+import { GET_HIGHEST_SIGNED_NONCE } from "../constants/InteractDatabase";
+import { GET_LATEST_SIGNED_TX } from "../constants/InteractDatabase";
 
 
 export default {
@@ -89,8 +91,6 @@ export default {
                     payload: HighestNonce
                 })
 
-                //can I put a call to the server here to get Tx details at highest nonce?
-
                 fetch("http://localhost:3001/Transaction/getTx", {
                     method: "GET",
                     mode: "cors", 
@@ -112,10 +112,52 @@ export default {
     },
 
 
-    //getHighestSignedNonce
 
-    //how to set the Tx details at highest signed nonce?
 
+
+
+
+
+
+
+
+
+
+    getHighestSignedNonce: (dispatch, CID) =>{
+        return (dispatch, getState) => {
+            fetch("http://localhost:3001/Transaction/HighestSignedNonce", {
+                method: "GET",
+                mode: "cors", 
+                headers: {
+                    "cid":CID
+                }
+            }).then((response) =>{
+                return response.json()
+            }).then((HighestSignedNonce) => {
+                dispatch({
+                    type: GET_HIGHEST_SIGNED_NONCE,
+                    payload: HighestSignedNonce
+                })
+
+                fetch("http://localhost:3001/Transaction/getTx", {
+                    method: "GET",
+                    mode: "cors", 
+                    headers: {
+                        "cid":CID,
+                        "nonce":HighestSignedNonce
+                    }
+                }).then((response) =>{
+                    return response.json()
+                }).then((LatestSignedTxDetails) => {
+
+                    dispatch({
+                        type: GET_LATEST_SIGNED_TX,
+                        payload: LatestSignedTxDetails
+                    })
+                })
+            })
+        }
+    }
 
    
 }
