@@ -8,8 +8,9 @@ yarn-error.log*
 #leveldb data
 /ExpressBackend/db
 *.ldb
-/ExpressBackend/dbb
-/ExpressBackend/dbTransactions
+/ExpressBackend/db*
+/ExpressBackend/dbTransactions/*
+db*
 
 
 
