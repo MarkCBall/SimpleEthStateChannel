@@ -25,7 +25,7 @@ let StateChannelJson = require ('./build/contracts/StateChannels.json')
 let StateChannelAbi = StateChannelJson.abi;
 //console.log("abi is ", StateChannelAbi)
 
-let deployedaddress = "0x22ffa5066e5ad8d8f7b1c7636a9473fa2b250bff"
+let deployedaddress = "0xE802cA7b7D9F3b9df1CB1f772444cFe2dC3C7A47"
 
 let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(secondwallet);
 //console.log("deployed contract is ", deployedContract)
@@ -36,21 +36,40 @@ let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provi
 
     let CID = 83; //uint
     let u1Address = firstwallet.signingKey.address //address
-    let u1TokenName =" Marks" //string memory
+    let u1TokenName ="Marks" //string memory
     let u2TokenName = "Matts" //string memory
     let u1InitialTokenBal = 50 //uint
     let u2InitialTokenBal = 30 //uint
 
-    let flatSig = await firstwallet.signMessage(CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal)
-    let sig = ethers.utils.splitSignature(flatsig)
+
+    // console.log(
+    //     ethers.utils.solidityKeccak256(['uint','uint'],[1,1])
+    // )
+ 
+    
+    //83,"0xB8D851486d1C953e31A44374ACa11151D49B8bb3","Marks","Matts",50,30
+    hashedEncodedChannelData = ethers.utils.solidityKeccak256(
+        ['uint','address','address','string','string','uint','uint'],
+        [CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal]
+    );
+
+    console.log(hashedEncodedChannelData)
+
+
+    let flatSig = await firstwallet.signMessage(hashedEncodedChannelData)//.then(console.log)
+    // let flatSig = await firstwallet.signMessage(CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal)
+    let sig = ethers.utils.splitSignature(flatSig);
     let v1 = sig.v //uint8
     let r1 = sig.r //bytes32
     let s1 = sig.s//bytes32
 
+    console.log(
+        await deployedContract.CreateChannel(
+            v1,r1,s1,CID,u1Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal
+        ).catch(console.log)
+    )
+         
 
-
-
-    //console.log(await deployedContract.CreateChannel(v1,r1,s1,CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal))
 })()
 
 
