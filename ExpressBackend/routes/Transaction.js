@@ -53,11 +53,11 @@ router.get('/getTx', async function(req, res, next) {
     //EXAMPLE req.header {cid:5, nonce:2}
     var CID = req.headers.cid;
     var nonce = req.headers.nonce;
-    console.log(CID,"xx",nonce)
+    //console.log(CID,"xx",nonce)
     db.get(CID+""+nonce)
     .then((dbres) => {
         res.send(JSON.stringify(dbres))
-        console.log("dbres is", dbres)
+        //console.log("dbres is", dbres)
      })
     .catch((err) => {
         res.send(JSON.stringify(0))
@@ -66,19 +66,45 @@ router.get('/getTx', async function(req, res, next) {
 });
 
 
+router.post('/confirm', async function(req, res, next) {
+    //EXAMPLE req.header {cid:5, nonce:2}
+    //req.body includes sig1 OR sig2
+    var CID = req.headers.cid;
+    var nonce = req.headers.nonce;
 
-// // POST@(/confirmTx/:CID/:nonce)
-// // 	//req.body includes sig
-// // //verify sig is the required countersignature
-// // //update the signature in the database
-// // //highestSignedNonce = highestNonce at at Hash(CID) 
-
-
-
-// // GET@(/getHighestSignedNonce/:CID)
-// // //returns the highest fully signed nonce on the specified channel
+    //verify sig is the required countersignature
 
 
+    //get the existing data at the Tx to countersign
+    var TxData = await db.get(CID+""+nonce)
+    .catch((err) => console.log("error",err))
+
+    //add the new sig to the existing TxData
+    TxData = {...TxData, ...req.body}
+    db.put(CID+""+nonce,TxData)
+    .catch((err) => console.log("error",err))
+
+    //store the nonce as the HighestNonce
+    db.put("HighestSignedNonce"+CID,nonce)
+    .catch((err) => console.log("error",err))
+
+    res.render('index', { title: 'Post completed correctly' });
+});
+
+
+router.get('/HighestSignedNonce', async function(req, res, next) {
+    //EXAMPLE req.header {CID:5}
+    var CID = req.headers.cid;
+    db.get("HighestSignedNonce"+CID)
+    .then((dbres) => {
+        res.send(JSON.stringify(dbres))
+        //console.log(dbres)
+     })
+    .catch((err) => {
+        res.send(JSON.stringify(0))
+        //console.log(err)
+    })
+});
 
 
 module.exports = router;
