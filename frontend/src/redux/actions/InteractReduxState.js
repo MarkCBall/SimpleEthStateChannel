@@ -8,13 +8,15 @@ export default {
     handleAddressChange: (dispatch,textString) => {
         //clean up redundant returns
         return (dispatch) =>{
-            dispatch({
-                type: CHANGE_ADDRESS_TEXT,
-                payload: {
-                    textString:textString,
-                    addressIsValid: isValidAddress(textString)
-                }
-            })
+            if (/^0[xX][0-9a-fA-F]*$/.test(textString)){
+                dispatch({
+                    type: CHANGE_ADDRESS_TEXT,
+                    payload: {
+                        textString:textString,
+                        addressIsValid: isValidAddress(textString)
+                    }
+                })
+            }
         }
     },
     setActiveChannel:(dispatch,channel) => {

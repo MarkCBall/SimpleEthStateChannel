@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 const ethers = require('ethers')
 
 
@@ -8,7 +9,6 @@ class ProposeNewCh extends Component {
         super(props);
         this.state = {
             CID:"666",
-            u1Address:"0x1",
             u2Address:"0x2",
             u1TokenName:"Marks",
             u2TokenName:"Matts",
@@ -26,16 +26,16 @@ class ProposeNewCh extends Component {
                 CID:Event.target.value
             })
     }
-    handleu1AddressChange = (Event) => {
-        if (/^0[xX][0-9a-fA-F]*/.test(Event.target.value))
-            this.setState( {
-                ...this.state,
-                u1Address:Event.target.value
-            })
+    // handleu1AddressChange = (Event) => {
+    //     if (/^0[xX][0-9a-fA-F]*/.test(Event.target.value))
+    //         this.setState( {
+    //             ...this.state,
+    //             u1Address:Event.target.value
+    //         })
 
-    }
+    // }
     handleu2AddressChange = (Event) => {
-        if (/^0[xX][0-9a-fA-F]*/.test(Event.target.value))
+        if (/^0[xX][0-9a-fA-F]*$/.test(Event.target.value))
             this.setState( {
                 ...this.state,
                 u2Address:Event.target.value
@@ -97,7 +97,7 @@ class ProposeNewCh extends Component {
             ['uint', 'address', 'address', 'string', 'string', 'uint', 'uint'],
             [
                 this.state.CID,
-                this.state.u1Address,
+                this.props.u1Address,
                 this.state.u2Address,
                 this.state.u1TokenName,
                 this.state.u2TokenName,
@@ -109,15 +109,16 @@ class ProposeNewCh extends Component {
 
         //ensure u1Address == signing address
         //let metamask sign instead
-        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+        //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
         let phrase = "example exile argue silk regular smile grass bomb merge arm assist farm"
-        let firstwallet = ethers.Wallet.fromMnemonic(phrase).connect(provider);
+        let firstwallet = ethers.Wallet.fromMnemonic(phrase)//.connect(provider);
 
         let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
         let sig = ethers.utils.splitSignature(flatSig);
         //  v1 = sig.v //uint8
         //  r1 = sig.r //bytes32
         //  s1 = sig.s//bytes32
+        console.log(sig)
         return sig
     }
 
@@ -144,8 +145,8 @@ class ProposeNewCh extends Component {
                 <input 
                     type="text" 
                     size="33"
-                    onChange={this.handleu1AddressChange}
-                    value={this.state.u1Address}
+                    disabled="disabled"
+                    value={this.props.u1Address}
                 /><br/>
 
                 Enter u2Address: 
@@ -201,5 +202,16 @@ class ProposeNewCh extends Component {
     }
 }
 
-export default ProposeNewCh;
+
+function mapStateToProps(state) {
+    return {
+        u1Address: state.InteractReduxState.addressSignedIn,
+
+    }
+}
+
+
+export default connect(mapStateToProps)(ProposeNewCh);
+
+
 

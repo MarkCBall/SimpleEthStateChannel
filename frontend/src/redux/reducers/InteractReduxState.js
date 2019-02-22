@@ -3,8 +3,8 @@ import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 
 
 const initialState = {
-  addressSignedIn: "",//"0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
-  addressIsValid:true,
+  addressSignedIn: "0x",//"0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
+  addressIsValid:false,
   activeChannel:-1
 };
 

@@ -38,7 +38,7 @@ router.post('/', async function(req, res, next) {
     var pendingKey;
     db.get("pending"+address1)
     .then((res)=> {pendingKey = res;})
-    .catch((err) => {console.log(err);pendingKey = {};})
+    .catch(() => {pendingKey = {};})
     
     var requestedKey;
     db.get("requested"+address1)
