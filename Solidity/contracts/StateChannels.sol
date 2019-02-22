@@ -12,19 +12,38 @@ contract StateChannels {
     	uint terminatingNonce;
     	uint terminatingBlockNum;
     }
+    ////////REMOVE THE VARIABLE BELOW
+    bytes public hackyStateOutput ;
+    bytes32 public hackyStateOutput2 ;
+    address public hackyStateOutput3 ;
 	
 	mapping (uint => channelDetails) public channels;
 	mapping (address => uint[]) public channelsAtAddress;
 
-    function CreateChannel(uint8 v1, bytes32 r1, bytes32 s1, uint CID, address u1Address, string memory u1TokenName, string memory u2TokenName, uint u1InitialTokenBal, uint u2InitialTokenBal) public{
+    function CreateChannel(uint8 v1, bytes32 r1, bytes32 s1, uint CID, address u1Address, string memory u1TokenName, string memory u2TokenName, uint u1InitialTokenBal, uint u2InitialTokenBal) public {
         //require CID is not already in the smart contract
         //require(channels[CID].u1Address != address(0));
         address u2Address = msg.sender;
         //require that sig1 correlates to all the data above
+
         bytes32 ChHash = keccak256(abi.encodePacked(CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal));
 
+        // //DELETE THIS HACKY SOLUTION BELOW!!!!!!!!!!!!!
+        // bytes memory ChDataEncoded =abi.encodePacked(CID,u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal);
+        // bytes32 ChHash = keccak256(ChDataEncoded);
+        // hackyStateOutput = ChDataEncoded;
+        // hackyStateOutput2 = ChHash;
+        // //hackyStateOutput3 =
+
+
         address calculatedProposingAddress = getOriginAddress(ChHash, v1,r1,s1);
-        //require(calculatedProposingAddress == u1Address);
+
+
+        //DELETE THIS TOO
+        hackyStateOutput3 = calculatedProposingAddress;
+
+
+        require(calculatedProposingAddress == u1Address);
         //put the given data into the contract
         channels[CID]=channelDetails(u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal,0,0);
     }
@@ -56,8 +75,9 @@ contract StateChannels {
     
     function getOriginAddress(bytes32 signedMessage, uint8 v, bytes32 r, bytes32 s) public pure returns(address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes32 prefixedHash = keccak256(abi.encode(prefix, signedMessage));
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, signedMessage));
         return ecrecover(prefixedHash, v, r, s);
     }
+
     
 }
