@@ -48,10 +48,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleAddressChange: (textString) => {
-            dispatch(InteractReduxState.handleAddressChange(dispatch, textString.target.value))
-            dispatch(InteractDatabase.getPendingChannels(dispatch, textString.target.value))
-            dispatch(InteractDatabase.getRequestedChannels(dispatch, textString.target.value))
+        handleAddressChange: (Event) => {
+            dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))
+            dispatch(InteractDatabase.getPendingChannels(dispatch, Event.target.value))
+            dispatch(InteractDatabase.getRequestedChannels(dispatch, Event.target.value))
             //call the interact database from interact reduxstate?
         }
     }
