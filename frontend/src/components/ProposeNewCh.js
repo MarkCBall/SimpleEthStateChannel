@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {isValidAddress} from "ethereumjs-util";
+
+//make this an import???
 const ethers = require('ethers')
 
 
@@ -90,6 +93,30 @@ class ProposeNewCh extends Component {
         .then("success",console.log)
         .catch("failure",console.log)
     }
+
+    // signChannelDataWithMetamask = async () => {
+    //     let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
+    //         ['uint', 'address', 'address', 'string', 'string', 'uint', 'uint'],
+    //         [
+    //             this.state.CID,
+    //             this.props.u1Address,
+    //             this.state.u2Address,
+    //             this.state.u1TokenName,
+    //             this.state.u2TokenName,
+    //             this.state.u1InitialTokenBal,
+    //             this.state.u2InitialTokenBal
+    //         ]
+    //     );
+    //     let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
+
+    //     console.log("calling metamask")
+    //     //console.log(window.web3.fromUtf8( ArrayifiedHashedEncodedChannelData  ))
+    //     //console.log(window.web3)//.utf8ToHex("Hello world")
+    //     //window.web3.eth.sign("0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87" ,"sss" )
+    //     var result = window.web3.eth.sign("0x0F7Cd2D9F4CEc1f7E01f880315Fd56101095fF87",
+    //     ArrayifiedHashedEncodedChannelData, (x) => {console.log(x)}); // second argument is web3.sha3("xyz")
+    //  console.log(result);
+    // }
    
     signChannelData = async () => {
         //generate the hash to sign based on channel details
@@ -144,7 +171,7 @@ class ProposeNewCh extends Component {
                 Enter u1Address: 
                 <input 
                     type="text" 
-                    size="33"
+                    size="35"
                     disabled="disabled"
                     value={this.props.u1Address}
                 /><br/>
@@ -152,10 +179,19 @@ class ProposeNewCh extends Component {
                 Enter u2Address: 
                 <input 
                     type="text" 
-                    size="33"
+                    size="35"
                     onChange={this.handleu2AddressChange}
                     value={this.state.u2Address}
-                /><br/>
+                    
+
+                />
+                {isValidAddress(this.state.u2Address) ?
+                    <div>VALID - do this better</div>
+                :
+                    <div>INVALID - do this better</div>
+                }
+                <br/>
+
 
                 Enter u1TokenName: 
                 <input 
