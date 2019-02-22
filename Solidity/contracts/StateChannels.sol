@@ -39,17 +39,19 @@ contract StateChannels {
     
     function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
         require(msg.sender == channels[CID].u1Address || msg.sender == channels[CID].u2Address);
+        
+        //require the requested terminating block is at least 24 hours from now
         require((proposedTerminatingBlockNumber - 5760) > block.number); 
+        
         require(nonce > channels[CID].terminatingNonce);
-        // check sig verifies balances and nonce to the other address
+
+        // check sig verifies balances and nonce to the counterparty's address
         bytes32 TxHash = keccak256(abi.encodePacked(CID,nonce,u1BalRetained,u2BalRetained));
-    //uint 8 v =...;
-    //bytes32 r =...;
-    //bytes32 s =...;
         address calculatedProposingAddress = getOriginAddress(TxHash, v,r,s);
         require(channels[CID].u1Address == calculatedProposingAddress || channels[CID].u1Address == msg.sender);
         require(channels[CID].u2Address == calculatedProposingAddress || channels[CID].u2Address == msg.sender);
 
+        //set when the contract can be terminated
         channels[CID].terminatingNonce = nonce;
         channels[CID].terminatingBlockNum = proposedTerminatingBlockNumber;
     }
