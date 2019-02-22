@@ -3,6 +3,15 @@ import React, { Component } from "react";
 
 
 class ProposeNewCh extends Component {
+
+    CID = getState().InteractReduxState.activeChannel//83;
+    u1Address = ACD.u1Address//firstwallet.signingKey.address //address
+    u2Address = ACD.u2Address//secondwallet.signingKey.address
+    u1TokenName = ACD.u1TokenName//"Marks" //string memory
+    u2TokenName = ACD.u2TokenName //"Matts" //string memory
+    u1InitialTokenBal = ACD.u1InitialTokenBal //50 //uint
+    u2InitialTokenBal = ACD.u2InitialTokenBal //30 //uint
+
     render() {
         return (
             <div>

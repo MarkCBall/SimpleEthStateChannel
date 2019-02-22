@@ -14,14 +14,14 @@
     let path = "m/44'/60'/0'/0/"
 
     let firstwallet = ethers.Wallet.fromMnemonic(phrase).connect(provider);
-    firstwallet.getBalance().then((BN) => console.log(BN.toString(10) / 1000000000000000000, " eth balance in firstwallet"))
-    console.log("firstwallet address is", firstwallet.signingKey.address, "\n")
-    console.log("firstwallet private key is", firstwallet.signingKey.privateKey, "\n")
+    // firstwallet.getBalance().then((BN) => console.log(BN.toString(10) / 1000000000000000000, " eth balance in firstwallet"))
+    // console.log("firstwallet address is", firstwallet.signingKey.address, "\n")
+    // console.log("firstwallet private key is", firstwallet.signingKey.privateKey, "\n")
 
     let secondwallet = ethers.Wallet.fromMnemonic(phrase, path + "1").connect(provider);
-    secondwallet.getBalance().then((BN) => console.log(BN.toString(10) / 1000000000000000000, " eth balance in secondwallet"))
-    console.log("secondwallet address is", secondwallet.signingKey.address, "\n")
-    console.log("secondwallet private key is", secondwallet.signingKey.privateKey, "\n")
+    // secondwallet.getBalance().then((BN) => console.log(BN.toString(10) / 1000000000000000000, " eth balance in secondwallet"))
+    // console.log("secondwallet address is", secondwallet.signingKey.address, "\n")
+    // console.log("secondwallet private key is", secondwallet.signingKey.privateKey, "\n")
 
 
     let StateChannelJson = require('./build/contracts/StateChannels.json')
@@ -90,11 +90,10 @@
     await deployedContract.CreateChannel(
         v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
     )//.then((x) => console.log("\n\nthen", x))
-    .catch((x) => console.log("\n\ncatch", x))
+    .catch((err) => console.log("\n\ncatch", err))
 
-    // //deployedContract.hackyStateOutput().then((x) => console.log("encoded data is ", x))
-    // deployedContract.hackyStateOutput2().then((x) => console.log("hashedencoded data is ", x))
-    deployedContract.hackyStateOutput3().then((x) => console.log("contracts calculated address is ", x))
+
+    //deployedContract.hackyStateOutput3().then((x) => console.log("contracts calculated address is ", x))
 
     
 
