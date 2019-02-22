@@ -79,7 +79,7 @@ class ProposeNewCh extends Component {
         //do a fetch
         //put the CID into the header and change server?
         let u1Sig = await this.signChannelData() ;
-        let body ={...this.state, u1Sig: u1Sig}
+        let body ={...this.state,u1Address:this.props.u1Address, u1Sig: u1Sig}
 
         fetch("http://localhost:3001/Channel", {
             method: "POST",
