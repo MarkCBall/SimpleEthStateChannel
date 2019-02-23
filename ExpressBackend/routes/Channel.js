@@ -41,7 +41,7 @@ router.post('/', async function(req, res, next) {
     .catch(() => {existingPendingsChannels = {};})
     
     var existingRequestedChannels;
-    await db.get("requested"+address1)
+    await db.get("requested"+address2)
     .then((res)=> {existingRequestedChannels = res;})
     .catch((err) => {existingRequestedChannels = {};})
 
