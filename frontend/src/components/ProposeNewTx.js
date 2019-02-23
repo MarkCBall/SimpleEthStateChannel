@@ -39,7 +39,7 @@ class ProposeNewTx extends Component {
                 u2Bal:this.state.MyTokenTx
             }
         }
-        fetch("35.182.146.179:3001/Transaction/new", {
+        fetch("http://35.183.188.67:3001/Transaction/new", {
                 method: "POST",
                 mode: "cors",
                 headers: {

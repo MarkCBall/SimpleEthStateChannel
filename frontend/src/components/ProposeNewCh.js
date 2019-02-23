@@ -81,7 +81,7 @@ class ProposeNewCh extends Component {
         let u1Sig = await this.signChannelData() ;
         let body ={...this.state,u1Address:this.props.u1Address, u1Sig: u1Sig}
 
-        fetch("35.182.146.179:3001/Channel", {
+        fetch("http://35.183.188.67:3001/Channel", {
             method: "POST",
             mode: "cors",
             headers: {
