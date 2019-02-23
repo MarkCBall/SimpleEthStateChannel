@@ -31,10 +31,20 @@ contract StateChannels {
         //put the given data into the contract
         channels[CID]=channelDetails(u1Address,u2Address,u1TokenName,u2TokenName,u1InitialTokenBal,u2InitialTokenBal,0,0);
     
+        //put the channel# into the index channelsAtAddress
+        channelsAtAddress[u1Address].push(CID);
+        channelsAtAddress[u2Address].push(CID);
+
+
         //DELETE THIS HACKY DEBUGGIN LINE
         hackyStateOutput3 = calculatedProposingAddress;
 
 
+    }
+
+    //the channelsAtAddress created won't return an array
+    function GetChannelsAtAddress(address addr) public view returns(uint[] memory){
+        return channelsAtAddress[addr];
     }
     
     function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{

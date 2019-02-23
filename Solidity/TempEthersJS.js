@@ -1,5 +1,34 @@
 (async () => {
 
+//     Available Accounts
+// ==================
+// (0) 0xb8d851486d1c953e31a44374aca11151d49b8bb3 (~100 ETH)
+// (1) 0xf6d5c6d500cac10ee7e6efb5c1b479cfb789950a (~100 ETH)
+// (2) 0xf09324e7a1e2821c2f7a4a47675f9cf0b1a5eb7f (~100 ETH)
+// (3) 0xfbaf82a227dcebd2f9334496658801f63299ba24 (~100 ETH)
+// (4) 0x774b5341944deac70199a4750556223cb008949b (~100 ETH)
+// (5) 0x4801428dad07e7c2401d033d195116011fc4e400 (~100 ETH)
+// (6) 0xcf08befbc01a5b02ea09d840797d6b4565d4d535 (~100 ETH)
+// (7) 0x1a2f3b98e434c02363f3dac3174af93c1d690914 (~100 ETH)
+// (8) 0x4a17f35f0a9927fb4141aa91cbbc72c1b31598de (~100 ETH)
+// (9) 0xdf18cb4f2005bc52f94e9bd6c31f7b0c6394e2c2 (~100 ETH)
+
+// Private Keys
+// ==================
+// (0) 0xf942d5d524ec07158df4354402bfba8d928c99d0ab34d0799a6158d56156d986
+// (1) 0x88f37cfbaed8c0c515c62a17a3a1ce2f397d08bbf20dcc788b69f11b5a5c9791
+// (2) 0xf4ebc8adae40bfc741b0982c206061878bffed3ad1f34d67c94fa32c3d33eac8
+// (3) 0xca67021a16478270ede4fddd65d0c031c75cd36c13b6a56bcb767928c1c2cf86
+// (4) 0x9955b1e01b2a7d8c22df41754d48b08dff3c0f3dd79d43e091c6311f97f0605a
+// (5) 0x130137aa9a7fbc7cadc98c079cda47a999ff41931d9feaab621855beceed71f7
+// (6) 0xead83d04f741d2b3ab50be1299c18aa1a82c241606861a9a6d3122443496522d
+// (7) 0xe6e893ac9f1c1db066a8a83a376554084b0a786e4cdcd91559d68bd4a1dac396
+// (8) 0xf1023ac6c8695f6ceb5331a382be8846bfe078b22c18ad7ef4fc3ea6e1cc59e4
+// (9) 0x4aef59c2cf29479b2c27a5f208e6b89d65d16f4977988151e135460db8274fdb
+
+
+
+
     //run this file to text interaction with contract deployed to testnet using remix as the server or frontend would interact with it
 
     //ganache-cli --mnemonic "example exile argue silk regular smile grass bomb merge arm assist farm"
