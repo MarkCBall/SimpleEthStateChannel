@@ -67,9 +67,12 @@ function mapDispatchToProps(dispatch) {
     return {
         handleAddressChange: (Event) => {
             dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))
-            dispatch(InteractDatabase.getPendingChannels(dispatch, Event.target.value))
-            dispatch(InteractDatabase.getRequestedChannels(dispatch, Event.target.value))
-            //call the interact database from interact reduxstate?
+
+            //can this be done better?
+            if (isValidAddress(Event.target.value)){
+                dispatch(InteractDatabase.getPendingChannels(dispatch, Event.target.value))
+                dispatch(InteractDatabase.getRequestedChannels(dispatch, Event.target.value))
+            }
         },
         handlePrivKeyChange: (Event) => {
             dispatch(InteractReduxState.handlePrivKeyChange(dispatch, Event.target.value))

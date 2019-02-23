@@ -134,12 +134,11 @@ class ProposeNewCh extends Component {
         );
         let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
 
-        //ensure u1Address == signing address
-        //let metamask sign instead
-        //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
-        let phrase = "example exile argue silk regular smile grass bomb merge arm assist farm"
-        let firstwallet = ethers.Wallet.fromMnemonic(phrase)//.connect(provider);
 
+        //let phrase = "example exile argue silk regular smile grass bomb merge arm assist farm"
+        //let firstwallet = ethers.Wallet.fromMnemonic(phrase)//.connect(provider);
+
+        let firstwallet = new ethers.Wallet(this.props.privateKey)
         let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
         let sig = ethers.utils.splitSignature(flatSig);
         //  v1 = sig.v //uint8
@@ -242,6 +241,7 @@ class ProposeNewCh extends Component {
 function mapStateToProps(state) {
     return {
         u1Address: state.InteractReduxState.addressSignedIn,
+        privateKey : state.InteractReduxState.privKey
 
     }
 }

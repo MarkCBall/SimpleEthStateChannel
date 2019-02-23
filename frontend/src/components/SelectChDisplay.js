@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import ChRequested from "./ChDisplays/ChRequested";
 import ChProposed from "./ChDisplays/ChProposed";
 import ChOngoing from "./ChDisplays/ChOngoing";
-import ChTimingOut from "./ChDisplays/ChTimingOut";
+//import ChTimingOut from "./ChDisplays/ChTimingOut";
 
 
 

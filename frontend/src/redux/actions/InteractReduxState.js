@@ -2,7 +2,9 @@ import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
 import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
 import {isValidAddress} from "ethereumjs-util";
-//import web3 from "web3";
+
+//make this an import???
+const ethers = require('ethers')
 
 export default {
 
@@ -36,8 +38,16 @@ export default {
                 type: HANDLE_PRIVKEY_CHANGE,
                 payload: privKeyText
             })
-            //set pubPrivKeypairValid to true
-            //set public address to value calulated from private key
+
+            let correspondingPubAddress = ethers.utils.computeAddress(privKeyText)
+
+            dispatch({
+                type: CHANGE_ADDRESS_TEXT,
+                payload: {
+                    textString:correspondingPubAddress,
+                    addressIsValid: true
+                }
+            })
 
         }
     },

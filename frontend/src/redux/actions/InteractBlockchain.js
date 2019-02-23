@@ -1,24 +1,16 @@
-import { COUNTERSIGN_CHANNEL } from "../constants/InteractBlockchain";
-import { TERMINATE_CHANNEL } from "../constants/InteractBlockchain";
-import { WITHDRAW_FROM_CHANNEL } from "../constants/InteractBlockchain";
+// import { COUNTERSIGN_CHANNEL } from "../constants/InteractBlockchain";
+// import { TERMINATE_CHANNEL } from "../constants/InteractBlockchain";
+// import { WITHDRAW_FROM_CHANNEL } from "../constants/InteractBlockchain";
+
+//make this an import???
+const ethers = require('ethers')
 
 
-let v1
-let r1
-let s1
-let CID
-let u1Address
-let u2Address
-let u1TokenName
-let u2TokenName
-let u1InitialTokenBal
-let u2InitialTokenBal
 let deployedContract
 
 
-    //init ethers
-    const ethers = require('ethers')
-    let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+//init ethers
+let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 
 //get contract info
     let StateChannelJson = require('../../SolidityJSON/StateChannels.json')
@@ -26,6 +18,7 @@ let deployedContract
     let StateChannelBytecode = StateChannelJson.bytecode
 
 //get wallets --> do this through metamask later?
+// let firstwallet = new ethers.Wallet(this.props.privateKey)
     let phrase = "example exile argue silk regular smile grass bomb merge arm assist farm"
     let path = "m/44'/60'/0'/0/"
     let firstwallet = ethers.Wallet.fromMnemonic(phrase).connect(provider);
@@ -36,7 +29,7 @@ let deployedContract
 (async () => {
 
 //get a contract --> change this to existing contract later
-    let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(secondwallet);
+    let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(firstwallet);
      deployedContract = await ContractFactory.deploy()
     //let deployedaddress = "0xE802cA7b7D9F3b9df1CB1f772444cFe2dC3C7A47"
     //let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(secondwallet);
@@ -45,20 +38,6 @@ let deployedContract
 
 })()
 
-var signChannelData = async (CID, u1Address, u2Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal) => {
-    let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
-        ['uint', 'address', 'address', 'string', 'string', 'uint', 'uint'],
-        [CID, u1Address, u2Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal]
-    );
-    let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
-
-    let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
-    let sig = ethers.utils.splitSignature(flatSig);
-     v1 = sig.v //uint8
-     r1 = sig.r //bytes32
-     s1 = sig.s//bytes32
-     return sig
-}
 
     
 
@@ -72,28 +51,34 @@ export default {
                 var ACD = getState().InteractDatabase.ActiveChannelDetails;
                 //console.log(getState())
 
-                CID = getState().InteractReduxState.activeChannel//83;
+                let CID = getState().InteractReduxState.activeChannel//83;
                 //CID FROM ACD
 
-                u1Address = ACD.u1Address//firstwallet.signingKey.address //address
-                u2Address = ACD.u2Address//secondwallet.signingKey.address
-                u1TokenName = ACD.u1TokenName//"Marks" //string memory
-                u2TokenName = ACD.u2TokenName //"Matts" //string memory
-                u1InitialTokenBal = ACD.u1InitialTokenBal //50 //uint
-                u2InitialTokenBal = ACD.u2InitialTokenBal //30 //uint
 
-                console.log(u1Address)
-                console.log(firstwallet.signingKey.address)
-                console.log(ACD)
+                let u1Address = ACD.u1Address//firstwallet.signingKey.address //address
+                //let u2Address = ACD.u2Address//secondwallet.signingKey.address
+                let u1TokenName = ACD.u1TokenName//"Marks" //string memory
+                let u2TokenName = ACD.u2TokenName //"Matts" //string memory
+                let u1InitialTokenBal = ACD.u1InitialTokenBal //50 //uint
+                let u2InitialTokenBal = ACD.u2InitialTokenBal //30 //uint
+                let v1 = ACD.u1Sig.v
+                let r1 = ACD.u1Sig.r
+                let s1 = ACD.u1Sig.s
+                
+                
+                firstwallet = new ethers.Wallet(getState().InteractReduxState.privKey)
 
-            //THIS SHOULD BE DONE BY u1 NOT u2 in propose channel
-                // signChannelData(CID, u1Address, u2Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal)
-                // .then(console.log)
+                //console.log(u1Address)
+                //console.log(firstwallet.signingKey.address)
+                //console.log(ACD)
+                console.log("deployedcontract ")
 
-                // deployedContract.CreateChannel(
-                //     v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
-                // )//.then((x) => console.log("\n\nthen", x))
-                // .catch((err) => console.log("\n\ncatch", err))
+
+
+                deployedContract.CreateChannel(
+                    v1, r1, s1, CID, u1Address, u1TokenName, u2TokenName, u1InitialTokenBal, u2InitialTokenBal
+                )//.then((x) => console.log("\n\nthen", x))
+                .catch((err) => console.log("\n\ncatch", err))
 
         }
 

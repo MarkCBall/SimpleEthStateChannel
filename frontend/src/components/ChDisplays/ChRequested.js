@@ -12,10 +12,11 @@ class ChRequested extends Component {
             <div>
                
                <InitialBalances/>
-               <button className="btn btn-danger"> If these terms are acceptable, countersign it and put on blockchain</button>
+               <button 
+                    className="btn btn-danger"
+                    onClick={this.props.countersignChannel}
+                > If these terms are acceptable, countersign it and put on blockchain</button>
             
-                <br/>
-                <button onClick={this.props.countersignChannel}>test countersign channel</button>
             </div>
         );
     }
