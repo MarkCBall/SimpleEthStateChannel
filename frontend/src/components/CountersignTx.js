@@ -26,7 +26,7 @@ class CountersignTx extends Component {
             }
         }
 
-        fetch("http://localhost:3001/Transaction/confirm", {
+        fetch("http://35.183.188.67:3001/Transaction/confirm", {
             method: "POST",
             mode: "cors",
             headers: {
