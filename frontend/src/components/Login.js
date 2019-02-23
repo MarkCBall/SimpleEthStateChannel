@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractReduxState from "../redux/actions/InteractReduxState";
 import InteractDatabase from "../redux/actions/InteractDatabase";
+import {isValidAddress} from "ethereumjs-util";
 
 
 //mport { Button } from 'react-bootstrap';
@@ -19,6 +20,20 @@ class Login extends Component {
                     onChange={this.props.handleAddressChange}
                     value={this.props.address}
                 />
+                {isValidAddress(this.props.address) ?
+                    <div>VALID - do this better</div>
+                :
+                    <div>INVALID - do this better</div>
+                }
+
+                {this.props.pubPrivKeypairValid ? <>private key good </> : <>unmatched keypair</> } &nbsp;
+                <input 
+                    type="text" 
+                    size="33"
+                    onChange={this.props.handlePrivKeyChange}
+                    value={this.props.privKey}
+                />
+            
 
                 
 
@@ -40,6 +55,8 @@ class Login extends Component {
 
 function mapStateToProps(state) {
     return {
+        privKey : state.InteractReduxState.privKey,
+        pubPrivKeypairValid : state.InteractReduxState.pubPrivKeypairValid,
         address: state.InteractReduxState.addressSignedIn,
         addressIsValid: state.InteractReduxState.addressIsValid,
         pendingChannels: state.InteractDatabase.PendingChannels
@@ -48,12 +65,19 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleAddressChange: (textString) => {
-            dispatch(InteractReduxState.handleAddressChange(dispatch, textString.target.value))
-            dispatch(InteractDatabase.getPendingChannels(dispatch, textString.target.value))
-            dispatch(InteractDatabase.getRequestedChannels(dispatch, textString.target.value))
-            //call the interact database from interact reduxstate?
+        handleAddressChange: (Event) => {
+            dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))
+
+            //can this be done better?
+            if (isValidAddress(Event.target.value)){
+                dispatch(InteractDatabase.getPendingChannels(dispatch, Event.target.value))
+                dispatch(InteractDatabase.getRequestedChannels(dispatch, Event.target.value))
+            }
+        },
+        handlePrivKeyChange: (Event) => {
+            dispatch(InteractReduxState.handlePrivKeyChange(dispatch, Event.target.value))
         }
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

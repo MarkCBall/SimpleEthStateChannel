@@ -63,6 +63,7 @@ export default {
                     ChType = "proposed";
                 else if (addressSignedIn === response.u2Address)
                     ChType = "requested";
+                    //console.log("get ch details from /channel",response)
 
                 dispatch({
                     type: GET_CHANNEL_DETAILS,

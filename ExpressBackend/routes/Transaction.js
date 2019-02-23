@@ -61,7 +61,8 @@ router.get('/getTx', async function(req, res, next) {
      })
     .catch((err) => {
         res.send(JSON.stringify(0))
-        console.log("error is",err)
+        console.log("error is (prob that cid+'0' nonce not initiated",err)
+        //should creating a channel start a db.put(CID+""+0,"")???
     })
 });
 
