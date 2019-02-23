@@ -24,10 +24,9 @@ class SelectChDisplay extends Component {
                 }
 
 
-                {/* if on blockchain and latestnonce =0 */}
+                {/* (this.props.ChDetails.ChType === "ongoing") && */}
                 <ChOngoing/><hr/>
-                 {/* if on blockchain and latestnonce >0  */}
-                {/* <ChTimingOut/><hr/> */}
+
                
   
             </div>
