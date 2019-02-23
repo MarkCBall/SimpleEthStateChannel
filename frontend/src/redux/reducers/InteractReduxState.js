@@ -9,7 +9,7 @@ const initialState = {
   addressIsValid:false,
   activeChannel:-1,
   privKey:"0xf942d5d524ec07158df4354402bfba8d928c99d0ab34d0799a6158d56156d986",
-  pubPrivKeypairValid:false
+  pubPrivKeypairValid:true
 };
 
 export default function(state = initialState, action) {

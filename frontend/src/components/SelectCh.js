@@ -9,8 +9,7 @@ class SelectCh extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          ToggleDispNewCh: true
-          //SET DEFAULT TO FALSE AFTER DEBUGGING
+          ToggleDispNewCh: false
         }
     }
 
