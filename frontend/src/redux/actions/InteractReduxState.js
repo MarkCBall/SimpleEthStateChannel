@@ -39,7 +39,7 @@ export default {
                 payload: privKeyText
             })
 
-            let correspondingPubAddress = ethers.utils.computeAddress(privKeyText)
+            let correspondingPubAddress = ethers.utils.computeAddress(privKeyText).toLowerCase()
 
             dispatch({
                 type: CHANGE_ADDRESS_TEXT,

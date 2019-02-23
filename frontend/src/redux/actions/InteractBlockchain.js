@@ -1,5 +1,6 @@
 
 
+import { ONGOING_CHANNELS } from "../constants/InteractBlockchain";
 const ethers = require('ethers')
 //init ethers
 //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
@@ -8,7 +9,7 @@ let provider = ethers.getDefaultProvider('ropsten');
 //get contract info
 let StateChannelJson = require('../../SolidityJSON/StateChannels.json')
 let StateChannelAbi = StateChannelJson.abi;
-let StateChannelBytecode = StateChannelJson.bytecode
+//let StateChannelBytecode = StateChannelJson.bytecode
 
 
     
@@ -28,11 +29,12 @@ export default {
             let activeWallet = new ethers.Wallet(getState().InteractReduxState.privKey).connect(provider)
 
 
+            //can deployedcontract be done out of function and connect be done inside?
 
             //get a contract --> change this to existing contract later
             // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(activeWallet);
             // let deployedContract = await ContractFactory.deploy()
-            let deployedaddress = "0x7034cC3eeDf27AC3f96599F0dD0de74A7960285B"
+            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
             let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
             //console.log("deployed contract is ", deployedContract)
 
@@ -79,6 +81,52 @@ export default {
 
         }
 
+    },
+
+
+    getOngoingChannels: (dispatch, address) => {
+        return async (dispatch) => {
+
+            //move this outside function?
+            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
+            let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider);
+            //console.log("deployed contract is ", deployedContract)
+
+
+            let OngoingChannels = {}
+            deployedContract.GetChannelsAtAddress(address)
+            .then((BN) => {
+                //console.log("\n\nthen", x)
+                BN.forEach(  val => {
+                    OngoingChannels = {
+                        ...OngoingChannels,
+                        [val.toString(10)]:val.toString(10)
+                    }  
+                })
+                dispatch({
+                        type: ONGOING_CHANNELS,
+                        payload: OngoingChannels
+                    })
+                
+            })
+            .catch((err) => console.log("\n\ncatch", err))
+        
+            
+
+            
+
+            // fetch("http://localhost:3001/Channel/pending", {
+            //     method: "GET",
+            //     mode: "cors", 
+            //     headers: {
+            //         "address":address
+            //     }
+            // }).then((response) =>{
+            //     return response.json()
+            // }).then((response) => {
+            //     
+            // })
+        }
     },
 
 }

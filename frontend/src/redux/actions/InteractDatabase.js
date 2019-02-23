@@ -58,6 +58,9 @@ export default {
             }).then((response) =>{
                 return response.json()
             }).then((response) => {
+
+                //FIGURE OUT HOW TO SET TYPE TO "ongoing"
+                //should posting to BC remove from requested?
                 var ChType = "";
                 if (addressSignedIn === response.u1Address)
                     ChType = "proposed";

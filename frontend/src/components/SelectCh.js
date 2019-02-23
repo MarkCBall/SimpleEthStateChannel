@@ -37,10 +37,12 @@ class SelectCh extends Component {
                 }
                 <br/>
 
-
-                
-                Ongoing/Closing:<button >CHx</button>
-                <button>CHx</button>
+                Ongoing/Closing:
+                {Object.keys(this.props.OngoingChannels).map(obj => {
+                    return <ChButton key={obj} CID={obj}/>
+                    })
+                }
+                <br/>
 
                 
                 <br/>
@@ -48,11 +50,6 @@ class SelectCh extends Component {
                 {this.state.ToggleDispNewCh &&
                 <ProposeNewCh/>
                 }
-
-                
-                <hr/>
-                <h1>Selected Channel: {this.props.activeChannel}</h1>
-
                 
             </div>
         );
@@ -61,6 +58,7 @@ class SelectCh extends Component {
 
 function mapStateToProps(state) {
     return {
+        OngoingChannels: state.InteractBlockchain.OngoingChannels,
         PendingChannels: state.InteractDatabase.PendingChannels,
         RequestedChannels: state.InteractDatabase.RequestedChannels,
         activeChannel: state.InteractReduxState.activeChannel
