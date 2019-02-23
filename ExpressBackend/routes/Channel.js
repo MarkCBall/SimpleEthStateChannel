@@ -34,22 +34,25 @@ router.post('/', async function(req, res, next) {
     var address2 = req.body.u2Address;
 
 
-    //both pendingKey and requestedKey can be run in parrallel for better efficiency
-    var pendingKey;
+    //both existingPendingsChannels and existingRequestedChannels can be run in parrallel for better efficiency
+    var existingPendingsChannels;
     await db.get("pending"+address1)
-    .then((res)=> {pendingKey = res;})
-    .catch(() => {pendingKey = {};})
+    .then((res)=> {existingPendingsChannels = res;})
+    .catch(() => {existingPendingsChannels = {};})
     
-    var requestedKey;
+    var existingRequestedChannels;
     await db.get("requested"+address1)
-    .then((res)=> {requestedKey = res;})
-    .catch((err) => {requestedKey = {};})
+    .then((res)=> {existingRequestedChannels = res;})
+    .catch((err) => {existingRequestedChannels = {};})
+
+    console.log("existingPendingsChannels is, ", existingPendingsChannels)
+    console.log("existingRequestedChannels is, ", existingRequestedChannels)
 
     //INCLUDE A GET so 
-    db.put("pending"+address1,{...pendingKey,[CID]:CID})
+    db.put("pending"+address1,{...existingPendingsChannels,[CID]:CID})
     //.then(console.log("\n\npending success"))
     .catch((err) => console.log("\n\npending failed",err))
-    db.put("requested"+address2,{...requestedKey,[CID]:CID})
+    db.put("requested"+address2,{...existingRequestedChannels,[CID]:CID})
     //.then(console.log("\n\nrequested success"))
     .catch((err) => console.log("\n\nrequested failed",err))
         
