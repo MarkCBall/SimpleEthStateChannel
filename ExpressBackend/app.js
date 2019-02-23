@@ -14,7 +14,7 @@ var TransactionRoute = require('./routes/Transaction');
 
 var app = express();
 
-app.use(cors());///WHYYYYY?
+app.use("*",cors());///WHYYYYY?
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
