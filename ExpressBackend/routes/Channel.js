@@ -34,17 +34,18 @@ router.post('/', async function(req, res, next) {
     var address2 = req.body.u2Address;
 
 
-
+    //both pendingKey and requestedKey can be run in parrallel for better efficiency
     var pendingKey;
-    db.get("pending"+address1)
+    await db.get("pending"+address1)
     .then((res)=> {pendingKey = res;})
     .catch(() => {pendingKey = {};})
     
     var requestedKey;
-    db.get("requested"+address1)
+    await db.get("requested"+address1)
     .then((res)=> {requestedKey = res;})
     .catch((err) => {requestedKey = {};})
 
+    //INCLUDE A GET so 
     db.put("pending"+address1,{...pendingKey,[CID]:CID})
     //.then(console.log("\n\npending success"))
     .catch((err) => console.log("\n\npending failed",err))
