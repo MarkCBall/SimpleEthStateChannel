@@ -45,6 +45,7 @@ export default {
             //create the channel
 
                 var ACD = getState().InteractDatabase.ActiveChannelDetails;
+                //ACD : Active Channel Detail
                 //console.log(getState())
 
                 let CID = getState().InteractReduxState.activeChannel//83;

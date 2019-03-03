@@ -116,17 +116,6 @@ export default {
     },
 
 
-
-
-
-
-
-
-
-
-
-
-
     getHighestSignedNonce: (dispatch, CID) =>{
         return (dispatch, getState) => {
             fetch("http://35.183.188.67:3001/Transaction/HighestSignedNonce", {

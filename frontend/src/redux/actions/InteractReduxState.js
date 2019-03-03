@@ -31,6 +31,7 @@ export default {
             })
         }
     },
+    
     handlePrivKeyChange:(dispatch,privKeyText) => {
         //regex to only allow valid entries
         return (dispatch) =>{

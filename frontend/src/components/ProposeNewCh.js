@@ -16,7 +16,8 @@ class ProposeNewCh extends Component {
             u1TokenName:"Marks",
             u2TokenName:"Matts",
             u1InitialTokenBal:"30",
-            u2InitialTokenBal:"50"
+            u2InitialTokenBal:"50",
+            InstanceOfChannelProposed:"0"
         }
     }
 
@@ -71,7 +72,27 @@ class ProposeNewCh extends Component {
             })
     }
 
+    handleClick() {
+    	this.setState((prevState) => ({
+      	   InstanceOfChannelProposed: prevState.InstanceOfChannelProposed + 1
+        }));
+    }
+
     handleSubmit = async () => {
+       
+        if (window.confirm("Do you really want to propose this channel?")) { 
+            if (this.InstanceOfChannelProposed !== 0) {
+                window.confirm("You've already proposed this channel at this session.Do you still want to continue?");
+    
+            }
+
+            //window.open("exit.html", "Thanks for Visiting!");
+            this.handleClick();
+          }   
+        if ((isValidAddress(this.state.u1Address) && isValidAddress(this.state.u2Address)) 
+        && (this.state.u1TokenName.length > 0 && this.state.u1TokenName.length > 0 )) 
+        {
+            
         //check if both addresses are valid
         //check if CID exists
         //check if names.length > 0
@@ -92,6 +113,10 @@ class ProposeNewCh extends Component {
         })
         .then("success",console.log)
         .catch("failure",console.log)
+        }
+        
+        else
+        console.log("Please check addresses and/or token names")
     }
 
     // signChannelDataWithMetamask = async () => {
@@ -130,6 +155,7 @@ class ProposeNewCh extends Component {
                 this.state.u2TokenName,
                 this.state.u1InitialTokenBal,
                 this.state.u2InitialTokenBal
+                
             ]
         );
         let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
@@ -159,7 +185,7 @@ class ProposeNewCh extends Component {
                 
              
 
-                Enter CID: 
+                Enter CID: &nbsp;
                 <input 
                     type="text" 
                     size="10"
@@ -167,32 +193,35 @@ class ProposeNewCh extends Component {
                     value={this.state.CID}
                 /><br/>
 
-                Enter u1Address: 
+                Enter u1Address: &nbsp;
                 <input 
                     type="text" 
                     size="35"
                     disabled="disabled"
                     value={this.props.u1Address}
-                /><br/>
+                />
+                <br/>
 
-                Enter u2Address: 
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                &emsp;&emsp;&emsp;&nbsp;&nbsp;
+                Enter u2Address: &nbsp;
                 <input 
                     type="text" 
                     size="35"
                     onChange={this.handleu2AddressChange}
                     value={this.state.u2Address}
-                    
-
-                />
-                {isValidAddress(this.state.u2Address) ?
-                    <div>VALID - do this better</div>
-                :
-                    <div>INVALID - do this better</div>
-                }
+                /> <label> 
+                    {isValidAddress(this.state.u2Address) ?
+                    <div>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    &emsp;&emsp;&emsp;&nbsp;&nbsp;</div>
+                    :
+                    <div>Invalid address; please enter again.</div>
+                    }
+                    </label>
                 <br/>
 
 
-                Enter u1TokenName: 
+                &nbsp; &nbsp; &nbsp; Enter u1TokenName: &nbsp;
                 <input 
                     type="text" 
                     size="20"
@@ -200,7 +229,7 @@ class ProposeNewCh extends Component {
                     value={this.state.u1TokenName}
                 /><br/>
 
-                Enter u2TokenName: 
+                &nbsp; &nbsp; &nbsp;  Enter u2TokenName: &nbsp;
                 <input 
                     type="text" 
                     size="20"
@@ -208,7 +237,7 @@ class ProposeNewCh extends Component {
                     value={this.state.u2TokenName}
                 /><br/>
 
-                Enter u1InitialTokenBal: 
+                Enter u1InitialTokenBal: &nbsp;
                 <input 
                     type="text" 
                     size="20"
@@ -216,22 +245,22 @@ class ProposeNewCh extends Component {
                     value={this.state.u1InitialTokenBal}
                 /><br/>
 
-                Enter u2InitialTokenBal: 
+                Enter u2InitialTokenBal: &nbsp;
                 <input 
                     type="text" 
                     size="20"
                     onChange={this.handleu2InitialTokenBalChange}
                     value={this.state.u2InitialTokenBal}
                 /><br/>
+                <br></br>
 
-
-
-                ((Fill out Capcha to)) 
+                
+                ((Fill out Capcha to)) &nbsp; &nbsp;
                 <button 
                     onClick={this.handleSubmit}
                     className="btn btn-success"
                 >Propose New Channel->(sign as u1)</button>
-
+                
             </div>
         );
     }
