@@ -62,7 +62,7 @@ class ProposeNewTx extends Component {
                         onChange={ this.handleMyTokenChange   }
                         value={this.state.MyTokenTx}
                     /> &nbsp;
-                    {this.userOneIsMe() ? this.props.u1TokenName : this.props.u2TokenName}
+                    {this.props.userOneIsMe ? this.props.u1TokenName : this.props.u2TokenName}
                     &nbsp; tokens for &nbsp;
                     <input 
                         type="text" 
@@ -70,7 +70,7 @@ class ProposeNewTx extends Component {
                         onChange={ this.handleCounterpartyTokenChange   }
                         value={this.state.CounterpartyTokenTx}
                     />&nbsp;
-                    {this.userOneIsMe() ? this.props.u2TokenName : this.props.u1TokenName}
+                    {this.props.userOneIsMe ? this.props.u2TokenName : this.props.u1TokenName}
                     &nbsp; tokens &nbsp;
                     <button className="btn btn-success" onClick={() => this.SubmitAndSign()}> submit and sign</button>
                     <br/>
