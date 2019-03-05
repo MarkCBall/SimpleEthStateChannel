@@ -19,13 +19,11 @@ class ProposeNewTx extends Component {
         this.setState({CounterpartyTokenTx:event.target.value})
     }
 
-    userOneIsMe = () => {
-        return this.props.u1Address === this.props.addressSignedIn
-    }
+ 
 
     SubmitAndSign = () => {
         var body;
-        if (this.userOneIsMe()){
+        if (this.props.userOneIsMe){
             body = {
                 sig1:"put functioncall here",
                 u1Bal:this.state.MyTokenTx,
@@ -88,7 +86,8 @@ function mapStateToProps(state) {
         addressSignedIn: state.InteractReduxState.addressSignedIn,
         u1TokenName: state.InteractDatabase.ActiveChannelDetails.u1TokenName,
         u2TokenName: state.InteractDatabase.ActiveChannelDetails.u2TokenName,
-        u1Address : state.InteractDatabase.ActiveChannelDetails.u1Address
+        u1Address : state.InteractDatabase.ActiveChannelDetails.u1Address,
+        userOneIsMe : state.InteractDatabase.ActiveChannelDetails.userOneIsMe
     }
 }
 export default connect(mapStateToProps)(ProposeNewTx);
