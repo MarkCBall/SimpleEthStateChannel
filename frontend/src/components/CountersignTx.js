@@ -39,19 +39,24 @@ class CountersignTx extends Component {
     render() {
         return (
             <div>
+
                 Latest nonce for the channel is:
                 {this.props.HighestNonce}
                 <br/>
-                You may sign the following transaction: <br/>
+                You may sign the following transaction: <br/> (only display if your sig is missing)<br/>
                 u1Bal:{this.props.u1Bal}<br/>
                 u2Bal:{this.props.u2Bal}<br/>
 
-                <button 
-                    onClick={this.countersignAndPostToDatabase} 
-                    className="btn btn-success"
-                >
-                    countersign
-                </button>
+                {((this.props.sig1===undefined && this.props.userOneIsMe) ||
+                 (this.props.sig2===undefined && !this.props.userOneIsMe))
+                &&
+                    <button 
+                        onClick={this.countersignAndPostToDatabase} 
+                        className="btn btn-success"
+                    >
+                        countersign
+                    </button>
+                }
             </div>
         );
     }
@@ -63,6 +68,9 @@ function mapStateToProps(state) {
         HighestNonce: state.InteractDatabase.HighestNonce,
         u1Bal:state.InteractDatabase.LatestTxDetails.u1Bal,
         u2Bal:state.InteractDatabase.LatestTxDetails.u2Bal,
+        //txDetails:state.InteractDatabase.LatestTxDetails,
+        sig1:state.InteractDatabase.LatestTxDetails.sig1,
+        sig2:state.InteractDatabase.LatestTxDetails.sig2,
         userOneIsMe:state.InteractDatabase.ActiveChannelDetails.userOneIsMe
     }
 }
