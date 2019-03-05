@@ -81,6 +81,7 @@ class ProposeNewCh extends Component {
     handleSubmit = async () => {
        
         if (window.confirm("Do you really want to propose this channel?")) { 
+            //what is the purpose of instanceofChannelProposed?
             if (this.InstanceOfChannelProposed !== 0) {
                 window.confirm("You've already proposed this channel at this session.Do you still want to continue?");
     
@@ -89,7 +90,7 @@ class ProposeNewCh extends Component {
             //window.open("exit.html", "Thanks for Visiting!");
             this.handleClick();
           }   
-        if ((isValidAddress(this.state.u1Address) && isValidAddress(this.state.u2Address)) 
+        if ((isValidAddress(this.props.u1Address,) && isValidAddress(this.state.u2Address)) 
         && (this.state.u1TokenName.length > 0 && this.state.u1TokenName.length > 0 )) 
         {
             
