@@ -23,11 +23,14 @@ export default {
             }
         }
     },
-    setActiveChannel:(dispatch,channel) => {
+    setActiveChannel:(dispatch,channel, isOngoing) => {
         return (dispatch) =>{
             dispatch({
                 type: SET_ACTIVE_CHANNEL,
-                payload: channel
+                payload: {
+                    channel:channel,
+                    isOngoing:isOngoing
+                }
             })
         }
     },

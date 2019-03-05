@@ -15,17 +15,19 @@ class SelectChDisplay extends Component {
     render() {
         return (
             <div>
-
-                {(this.props.ChDetails.ChType === "requested") &&
+                <hr/>
+                {(!this.props.ChDetails.userOneIsMe) && 
+                (!this.props.isOngoing) && 
+                (('u2Address'  in this.props.ChDetails)) &&
                     <ChRequested/>
                 }
-                {(this.props.ChDetails.ChType === "proposed") &&
+                {(this.props.ChDetails.userOneIsMe) && (!this.props.isOngoing) &&
                     <ChProposed/>
                 }
-
-
-                {/* (this.props.ChDetails.ChType === "ongoing") && */}
-                <ChOngoing/><hr/>
+                {(this.props.isOngoing) &&
+                    <ChOngoing/>
+                }
+                
 
                
   
@@ -36,7 +38,7 @@ class SelectChDisplay extends Component {
 
 function mapStateToProps(state) {
     return {
-        activeChannel: state.InteractReduxState.activeChannel,
+        isOngoing: state.InteractReduxState.activeChannel.isOngoing,
         ChDetails: state.InteractDatabase.ActiveChannelDetails
     }
 }

@@ -59,20 +59,23 @@ export default {
                 return response.json()
             }).then((response) => {
 
-                //FIGURE OUT HOW TO SET TYPE TO "ongoing"
-                //should posting to BC remove from requested?
-                var ChType = "";
-                if (addressSignedIn === response.u1Address)
-                    ChType = "proposed";
-                else if (addressSignedIn === response.u2Address)
-                    ChType = "requested";
-                    //console.log("get ch details from /channel",response)
+                //if (getState.InteractDatabase.ActiveChannelDetails.ChType != "ongoing"){
+                    //     var ChType = "";
+                    // if (addressSignedIn === response.u1Address){
+                    //     ChType = "proposed";
+                    // }
+                    // else if (addressSignedIn === response.u2Address){
+                    //     ChType = "requested";
+                    // }
+                //}
+                
 
                 dispatch({
                     type: GET_CHANNEL_DETAILS,
                     payload: {
                         ...response,
-                        ChType:ChType
+                        userOneIsMe: 
+                            (addressSignedIn === response.u1Address) ? true : false
                     }
                 })
             })

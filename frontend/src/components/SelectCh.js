@@ -25,21 +25,21 @@ class SelectCh extends Component {
 
                 Pending your acceptance:
                 {Object.keys(this.props.RequestedChannels).map(obj => {
-                        return <ChButton key={obj} CID={obj}/>
+                        return <ChButton key={obj} CID={obj} isOngoing={false}/>
                         })
                     }
                 <br/>
 
                 Pending other acceptance:
                 {Object.keys(this.props.PendingChannels).map(obj => {
-                    return <ChButton key={obj} CID={obj}/>
+                    return <ChButton key={obj} CID={obj} isOngoing={false}/>
                     })
                 }
                 <br/>
 
                 Ongoing/Closing:
                 {Object.keys(this.props.OngoingChannels).map(obj => {
-                    return <ChButton key={obj} CID={obj}/>
+                    return <ChButton key={obj} CID={obj} isOngoing={true}/>
                     })
                 }
                 <br/>

@@ -23,7 +23,6 @@ class ChOngoing extends Component {
     render() {
         return (
             <div>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 <button className="btn btn-danger"> Initialize channel termination</button>
                 <div className="row line-above">
                     <div className="col-6 col-solid">
