@@ -91,8 +91,10 @@ export default {
                     "cid":CID
                 }
             }).then((response) =>{
+                //console.log(response)
                 return response.json()
             }).then((HighestNonce) => {
+                console.log(HighestNonce)
                 dispatch({
                     type: GET_HIGHEST_NONCE,
                     payload: HighestNonce

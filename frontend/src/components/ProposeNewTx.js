@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+
+//make this an import???
+const ethers = require('ethers')
+
+
 //import TxTokenRow from "./TxTokenRow";
 
 
@@ -19,20 +24,43 @@ class ProposeNewTx extends Component {
         this.setState({CounterpartyTokenTx:event.target.value})
     }
 
+    //bytes32 TxHash = keccak256(abi.encodePacked(CID,nonce,u1BalRetained,u2BalRetained));
+    signNewTxData = async (u1BalRetained,u2BalRetained) => {
+        console.log(this.props.activeChannelNum,this.props.HighestNonce,u1BalRetained,u2BalRetained)
+
+        //generate the hash to sign based on channel details
+        let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
+            ['uint', 'uint', 'uint', 'uint'],
+            [
+                this.props.activeChannelNum,
+                this.props.HighestNonce,
+                u1BalRetained,
+                u2BalRetained
+            ]
+        );
+        let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
+
+        let firstwallet = new ethers.Wallet(this.props.privateKey)
+        let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
+        let sig = ethers.utils.splitSignature(flatSig);
+        console.log(sig)
+        return sig
+    }
+
  
 
-    SubmitAndSign = () => {
+    SubmitAndSign = async () => {
         var body;
         if (this.props.userOneIsMe){
             body = {
-                sig1:"put functioncall here",
+                sig1: await this.signNewTxData(this.state.MyTokenTx,this.state.CounterpartyTokenTx),
                 u1Bal:this.state.MyTokenTx,
                 u2Bal:this.state.CounterpartyTokenTx
             }
         }
         else{
             body = {
-                sig2:"put functioncall here",
+                sig2: await this.signNewTxData(this.state.CounterpartyTokenTx,this.state.MyTokenTx),
                 u1Bal:this.state.CounterpartyTokenTx,
                 u2Bal:this.state.MyTokenTx
             }
@@ -42,7 +70,7 @@ class ProposeNewTx extends Component {
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
-                    "cid":this.props.activeChannel,
+                    "cid":this.props.activeChannelNum,
                 },
                 body: JSON.stringify(body)
             })
@@ -82,7 +110,10 @@ class ProposeNewTx extends Component {
 
 function mapStateToProps(state) {
     return {
-        activeChannel: state.InteractReduxState.activeChannel,
+
+        activeChannelNum: state.InteractReduxState.activeChannel.channel,
+        privateKey : state.InteractReduxState.privKey,
+        HighestNonce: state.InteractDatabase.HighestNonce,
         addressSignedIn: state.InteractReduxState.addressSignedIn,
         u1TokenName: state.InteractDatabase.ActiveChannelDetails.u1TokenName,
         u2TokenName: state.InteractDatabase.ActiveChannelDetails.u2TokenName,
