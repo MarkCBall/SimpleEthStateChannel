@@ -68,6 +68,19 @@ class CountersignTx extends Component {
         .catch("failure",console.log)
     }
 
+    isReadyToCountersign = () =>{
+        if (this.props.HighestNonce>this.props.HighestSignedNonce){
+            if (
+                    (this.sig1Undefined() && this.props.userOneIsMe) ||
+                    ((!this.sig1Undefined()) && !this.props.userOneIsMe)){
+                   return true;
+               }
+        } 
+        return false
+
+
+    }
+
 
     render() {
         return (
@@ -80,12 +93,7 @@ class CountersignTx extends Component {
                 u1Bal:{this.props.u1Bal}<br/>
                 u2Bal:{this.props.u2Bal}<br/>
 
-                {((this.sig1Undefined() && this.props.userOneIsMe) ||
-                 ((!this.sig1Undefined()) && !this.props.userOneIsMe))
-
-                 
-                    
-                &&
+                {this.isReadyToCountersign() &&
                     <button 
                         onClick={this.countersignAndPostToDatabase} 
                         className="btn btn-success"
@@ -102,10 +110,11 @@ function mapStateToProps(state) {
     return {
         CID: state.InteractReduxState.activeChannel.channel,
         HighestNonce: state.InteractDatabase.HighestNonce,
+        HighestSignedNonce: state.InteractDatabase.HighestSignedNonce,
         u1Bal:state.InteractDatabase.LatestTxDetails.u1Bal,
         u2Bal:state.InteractDatabase.LatestTxDetails.u2Bal,
         // txDetails:state.InteractDatabase.LatestTxDetails,
-        // sig1:state.InteractDatabase.LatestTxDetails.sig1,
+        sig1:state.InteractDatabase.LatestTxDetails.sig1,
         // sig2:state.InteractDatabase.LatestTxDetails.sig2,
         userOneIsMe:state.InteractDatabase.ActiveChannelDetails.userOneIsMe,
         privateKey:state.InteractReduxState.privKey
