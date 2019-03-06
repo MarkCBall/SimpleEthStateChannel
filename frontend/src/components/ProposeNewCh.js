@@ -58,7 +58,7 @@ class ProposeNewCh extends Component {
         })
     }
     handleu1InitialTokenBalChange = (Event) => {
-        if (!isNaN(Event.target.value && Event.target.value >= 0))
+        if (!isNaN(Event.target.value) && Event.target.value >= 0)
             this.setState( {
                 ...this.state,
                 u1InitialTokenBal:Event.target.value
