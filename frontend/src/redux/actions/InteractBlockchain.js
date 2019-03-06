@@ -48,7 +48,7 @@ export default {
                 //ACD : Active Channel Detail
                 //console.log(getState())
 
-                let CID = getState().InteractReduxState.activeChannel//83;
+                let CID = getState().InteractReduxState.activeChannel.channel//83;
                 //CID FROM ACD
 
 

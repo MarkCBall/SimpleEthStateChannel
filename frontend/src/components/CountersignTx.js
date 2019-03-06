@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 
 class CountersignTx extends Component {
 
+    sig1Undefined = () => {
+        return this.props.sig1===undefined;
+    }
+
     countersignAndPostToDatabase = () =>{
         
         // var u1Bal=this.props.u1Bal;
@@ -47,8 +51,11 @@ class CountersignTx extends Component {
                 u1Bal:{this.props.u1Bal}<br/>
                 u2Bal:{this.props.u2Bal}<br/>
 
-                {((this.props.sig1===undefined && this.props.userOneIsMe) ||
-                 (this.props.sig2===undefined && !this.props.userOneIsMe))
+                {((this.sig1Undefined() && this.props.userOneIsMe) ||
+                 ((!this.sig1Undefined()) && !this.props.userOneIsMe))
+
+                 
+                    
                 &&
                     <button 
                         onClick={this.countersignAndPostToDatabase} 
