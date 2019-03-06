@@ -19,7 +19,8 @@ export default function(state = initialState, action) {
     return {
         ...state,// ...action.payload
         addressSignedIn:action.payload.addressSignedIn,
-        addressIsValid:action.payload.addressIsValid
+        addressIsValid:action.payload.addressIsValid,
+        pubPrivKeypairValid:action.payload.pubPrivKeypairValid
     }
 
     case SET_ACTIVE_CHANNEL:

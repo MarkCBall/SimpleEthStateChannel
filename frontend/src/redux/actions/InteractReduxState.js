@@ -9,15 +9,22 @@ const ethers = require('ethers')
 export default {
 
     handleAddressChange: (dispatch,addressSignedIn) => {
-        //clean up redundant returns
-        return (dispatch) =>{
+        //clean up redundant returns?
+        return (dispatch, getState) =>{
             //set pubPrivKeypairValid according to logic
             if (/^0[xX][0-9a-fA-F]*$/.test(addressSignedIn)){
+
+                //if isValid address && addressSignedIn===ethers.utils....
+                    //dispatch with true 
+
+                let privKey = getState().InteractReduxState.privKey
+                let pubPrivKeypairValid = (addressSignedIn ===ethers.utils.computeAddress(privKey).toLowerCase())
                 dispatch({
                     type: CHANGE_ADDRESS_TEXT,
                     payload: {
                         addressSignedIn:addressSignedIn,
-                        addressIsValid: isValidAddress(addressSignedIn)
+                        addressIsValid: isValidAddress(addressSignedIn),
+                        pubPrivKeypairValid: pubPrivKeypairValid
                     }
                 })
             }
@@ -36,13 +43,11 @@ export default {
     },
     
     handlePrivKeyChange:(dispatch,privKeyText) => {
-        //regex to only allow valid entries
-
-        //if the priv key is 66 long
-            //
-
         return (dispatch) =>{
+
+            //why doesn't it work do do the else clause always and let the change_address_text over-ride the pubPrivKeypairValid?
             
+            //change address text should dispatch get pending channels ect
 
             if (privKeyText.length===66){ //better validation to be done?
                 let correspondingPubAddress = ethers.utils.computeAddress(privKeyText).toLowerCase()
@@ -50,31 +55,26 @@ export default {
                     type: CHANGE_ADDRESS_TEXT,
                     payload: {
                         addressSignedIn:correspondingPubAddress,
-                        addressIsValid: true
+                        addressIsValid: true,
+                        pubPrivKeypairValid: true
                     }
                 })
                 dispatch({
                     type: HANDLE_PRIVKEY_CHANGE,
                     payload: {
-                        pubPrivKeypairValid: true,
-                        privKey:privKeyText
+                        privKey:privKeyText,
+                        pubPrivKeypairValid: true
                     } 
                 })
             }else{
                 dispatch({
                     type: HANDLE_PRIVKEY_CHANGE,
                     payload: {
-                        pubPrivKeypairValid: false,
-                        privKey:privKeyText
+                        privKey:privKeyText,
+                        pubPrivKeypairValid: false
                     } 
                 })
             }
-
-            
-
-            
-            
-
         }
     },
 

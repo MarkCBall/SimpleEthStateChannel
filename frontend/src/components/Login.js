@@ -10,7 +10,7 @@ import {isValidAddress} from "ethereumjs-util";
 
 class Login extends Component {
   
-    
+
 
     render() {
         return (
@@ -21,7 +21,6 @@ class Login extends Component {
                         <input 
                             className="form-control is-valid"
                             type="text" 
-                            size="33"
                             onChange={this.props.handleAddressChange}
                             value={this.props.address}
                         />
@@ -29,28 +28,31 @@ class Login extends Component {
                         <input 
                             className="form-control is-invalid"
                             type="text" 
-                            size="33"
                             onChange={this.props.handleAddressChange}
                             value={this.props.address}
                         />
                     }
                     
                 
-                
+                Private key:
 
                 {this.props.pubPrivKeypairValid ? 
-                    <>Private key good </> 
+                    <input 
+                        className="form-control is-valid"
+                        type="text" 
+                        onChange={this.props.handlePrivKeyChange}
+                        value={this.props.privKey}
+                    />
                 : 
-                    <>Private key is an unmatched keypair</> 
+                    <input 
+                        className="form-control is-invalid"
+                        type="text" 
+                        onChange={this.props.handlePrivKeyChange}
+                        value={this.props.privKey}
+                    />
                 } &nbsp;
                 
                 
-                <input 
-                    type="text" 
-                    size="33"
-                    onChange={this.props.handlePrivKeyChange}
-                    value={this.props.privKey}
-                />
             
 
                 {/* <br/><br/><br/>
