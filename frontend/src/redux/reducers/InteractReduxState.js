@@ -17,8 +17,8 @@ export default function(state = initialState, action) {
 
     case CHANGE_ADDRESS_TEXT:
     return {
-        ...state, 
-        addressSignedIn:action.payload.textString,
+        ...state,// ...action.payload
+        addressSignedIn:action.payload.addressSignedIn,
         addressIsValid:action.payload.addressIsValid
     }
 
@@ -31,7 +31,8 @@ export default function(state = initialState, action) {
     case HANDLE_PRIVKEY_CHANGE:
     return {
         ...state,
-        privKey:action.payload
+        privKey:action.payload.privKey,
+        pubPrivKeypairValid:action.payload.pubPrivKeypairValid
     }
 
     default:

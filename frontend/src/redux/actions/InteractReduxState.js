@@ -8,16 +8,16 @@ const ethers = require('ethers')
 
 export default {
 
-    handleAddressChange: (dispatch,textString) => {
+    handleAddressChange: (dispatch,addressSignedIn) => {
         //clean up redundant returns
         return (dispatch) =>{
             //set pubPrivKeypairValid according to logic
-            if (/^0[xX][0-9a-fA-F]*$/.test(textString)){
+            if (/^0[xX][0-9a-fA-F]*$/.test(addressSignedIn)){
                 dispatch({
                     type: CHANGE_ADDRESS_TEXT,
                     payload: {
-                        textString:textString,
-                        addressIsValid: isValidAddress(textString)
+                        addressSignedIn:addressSignedIn,
+                        addressIsValid: isValidAddress(addressSignedIn)
                     }
                 })
             }
@@ -37,21 +37,43 @@ export default {
     
     handlePrivKeyChange:(dispatch,privKeyText) => {
         //regex to only allow valid entries
+
+        //if the priv key is 66 long
+            //
+
         return (dispatch) =>{
-            dispatch({
-                type: HANDLE_PRIVKEY_CHANGE,
-                payload: privKeyText
-            })
+            
 
-            let correspondingPubAddress = ethers.utils.computeAddress(privKeyText).toLowerCase()
+            if (privKeyText.length===66){ //better validation to be done?
+                let correspondingPubAddress = ethers.utils.computeAddress(privKeyText).toLowerCase()
+                dispatch({
+                    type: CHANGE_ADDRESS_TEXT,
+                    payload: {
+                        addressSignedIn:correspondingPubAddress,
+                        addressIsValid: true
+                    }
+                })
+                dispatch({
+                    type: HANDLE_PRIVKEY_CHANGE,
+                    payload: {
+                        pubPrivKeypairValid: true,
+                        privKey:privKeyText
+                    } 
+                })
+            }else{
+                dispatch({
+                    type: HANDLE_PRIVKEY_CHANGE,
+                    payload: {
+                        pubPrivKeypairValid: false,
+                        privKey:privKeyText
+                    } 
+                })
+            }
 
-            dispatch({
-                type: CHANGE_ADDRESS_TEXT,
-                payload: {
-                    textString:correspondingPubAddress,
-                    addressIsValid: true
-                }
-            })
+            
+
+            
+            
 
         }
     },

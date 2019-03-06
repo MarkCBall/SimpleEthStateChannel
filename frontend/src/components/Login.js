@@ -10,24 +10,41 @@ import {isValidAddress} from "ethereumjs-util";
 
 class Login extends Component {
   
+    
 
     render() {
         return (
             <div>
-                {this.props.addressIsValid ? <>Logged in with </> : <>Enter valid address</> } &nbsp;
-                <input 
-                    type="text" 
-                    size="33"
-                    onChange={this.props.handleAddressChange}
-                    value={this.props.address}
-                />
-                {isValidAddress(this.props.address) ?
-                    <div>VALID - do this better</div>
-                :
-                    <div>INVALID - do this better</div>
-                }
+                Public ethereum address to interact on:
+               
+                    {isValidAddress(this.props.address) ?
+                        <input 
+                            className="form-control is-valid"
+                            type="text" 
+                            size="33"
+                            onChange={this.props.handleAddressChange}
+                            value={this.props.address}
+                        />
+                    :
+                        <input 
+                            className="form-control is-invalid"
+                            type="text" 
+                            size="33"
+                            onChange={this.props.handleAddressChange}
+                            value={this.props.address}
+                        />
+                    }
+                    
+                
+                
 
-                {this.props.pubPrivKeypairValid ? <>private key good </> : <>unmatched keypair</> } &nbsp;
+                {this.props.pubPrivKeypairValid ? 
+                    <>Private key good </> 
+                : 
+                    <>Private key is an unmatched keypair</> 
+                } &nbsp;
+                
+                
                 <input 
                     type="text" 
                     size="33"
@@ -36,10 +53,10 @@ class Login extends Component {
                 />
             
 
-                <br/>
+                {/* <br/><br/><br/>
                 <button className="btn btn-info btn-sm">Toggle Display</button>
                 <button className="btn btn-danger btn-sm">Interact with blockchain</button>
-                <button className="btn btn-success btn-sm">Interact with statechannel</button>
+                <button className="btn btn-success btn-sm">Interact with statechannel</button> */}
                 <hr/>
             </div>
         );
