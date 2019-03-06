@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
+import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 
 import CurrentBalances from "../ContractInfo/CurrentBalances";
 import InitialBalances from "../ContractInfo/InitialBalances";
@@ -14,7 +15,7 @@ class ChOngoing extends Component {
         }
     }
 
-    toggleDispNewTx(){
+    toggleDispNewTx = () => {
         this.setState({ToggleDispNewTx:!this.state.ToggleDispNewTx})
     }
 
@@ -23,7 +24,10 @@ class ChOngoing extends Component {
     render() {
         return (
             <div>
-                <button className="btn btn-danger"> Initialize channel termination</button>
+                <button 
+                    className="btn btn-danger"
+                    onClick={this.props.initChannelTermination}
+                > Initialize channel termination</button>
                 <div className="row line-above">
                     <div className="col-6 col-solid">
                     <CurrentBalances/>
@@ -44,7 +48,7 @@ class ChOngoing extends Component {
 
 
 
-                <button className="btn btn-info" onClick={this.toggleDispNewTx.bind(this)}>Toggle Propose New Transaction</button>
+                <button className="btn btn-info" onClick={this.toggleDispNewTx}>Toggle Propose New Transaction</button>
                 <br/>
                 {this.state.ToggleDispNewTx && 
                     <ProposeNewTx/>
@@ -56,5 +60,21 @@ class ChOngoing extends Component {
     }
 }
 
-export default ChOngoing;
 
+
+function mapStateToProps(state) {
+    return {
+        // address: state.InteractReduxState.addressSignedIn,
+        // addressIsValid: state.InteractReduxState.addressIsValid,
+        // pendingChannels: state.InteractDatabase.PendingChannels
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        initChannelTermination: () => {
+            dispatch(InteractBlockchain.initChannelTermination(dispatch))     
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ChOngoing);

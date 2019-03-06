@@ -89,7 +89,7 @@ class CountersignTx extends Component {
                 Latest nonce for the channel is:
                 {this.props.HighestNonce}
                 <br/>
-                You may sign the following transaction: <br/> (only display if your sig is missing)<br/>
+                You may sign the following transaction: <br/>
                 u1Bal:{this.props.u1Bal}<br/>
                 u2Bal:{this.props.u2Bal}<br/>
 

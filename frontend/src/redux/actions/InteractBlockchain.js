@@ -78,11 +78,63 @@ export default {
                 .catch((err) => console.log("\n\ncatch", err))
 
 
-                //remove requested from database
+                //remove requested and proposed from database
 
         }
 
     },
+
+
+    initChannelTermination: (dispatch) => {
+        return async (dispatch, getState) => {
+            
+            let activeWallet = new ethers.Wallet(getState().InteractReduxState.privKey).connect(provider)
+            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
+            let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
+                
+            var DBData = getState().InteractDatabase;
+            console.log(getState())
+            let CID = getState().InteractReduxState.activeChannel.channel
+            let propTermBlockNum = 6147964 + (4*60*24)// query blockchain for this data later
+            let u1Bal = DBData.LatestSignedTxDetails.u1Bal 
+            let u2Bal = DBData.LatestSignedTxDetails.u2Bal
+            let nonce = DBData.HighestSignedNonce
+
+                // let u1Address = ACD.u1Address//activeWallet.signingKey.address //address
+                // //let u2Address = ACD.u2Address//secondwallet.signingKey.address
+                // let u1TokenName = ACD.u1TokenName//"Marks" //string memory
+                // let u2TokenName = ACD.u2TokenName //"Matts" //string memory
+                // let u1InitialTokenBal = ACD.u1InitialTokenBal //50 //uint
+                // let u2InitialTokenBal = ACD.u2InitialTokenBal //30 //uint
+            
+                let v
+                let r
+                let s
+
+
+                if (DBData.ActiveChannelDetails.userOneIsMe){
+                    v = DBData.LatestSignedTxDetails.sig2.v
+                    r = DBData.LatestSignedTxDetails.sig2.r
+                    s = DBData.LatestSignedTxDetails.sig2.s
+                }else{
+                    v = DBData.LatestSignedTxDetails.sig1.v
+                    r = DBData.LatestSignedTxDetails.sig1.r
+                    s = DBData.LatestSignedTxDetails.sig1.s
+                }
+                
+                
+                console.log("inputs are", v, r, s, CID, propTermBlockNum, u1Bal, u2Bal, nonce)
+                
+                //function InitChannelTermination(uint8 v, bytes32 r, bytes32 s, uint CID, uint proposedTerminatingBlockNumber, uint u1BalRetained, uint u2BalRetained, uint nonce) public{
+
+                deployedContract.InitChannelTermination(
+                    v, r, s, CID, propTermBlockNum, u1Bal, u2Bal, nonce
+                ).then((x) => console.log("\n\nthen", x))
+                .catch((err) => console.log("\n\ncatch", err))
+
+        }
+    },
+
 
 
     getOngoingChannels: (dispatch, address) => {
