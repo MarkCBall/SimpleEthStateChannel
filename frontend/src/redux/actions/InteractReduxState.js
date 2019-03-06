@@ -3,6 +3,9 @@ import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
 import {isValidAddress} from "ethereumjs-util";
 
+import InteractDatabase from "./InteractDatabase";
+import InteractBlockchain from "./InteractBlockchain";
+
 //make this an import???
 const ethers = require('ethers')
 
@@ -27,6 +30,13 @@ export default {
                         pubPrivKeypairValid: pubPrivKeypairValid
                     }
                 })
+
+                //refactor this
+                if (isValidAddress(addressSignedIn)){
+                    dispatch(InteractDatabase.getPendingChannels(dispatch, addressSignedIn))
+                    dispatch(InteractDatabase.getRequestedChannels(dispatch, addressSignedIn))
+                    dispatch(InteractBlockchain.getOngoingChannels(dispatch, addressSignedIn))
+                }
             }
         }
     },
@@ -59,6 +69,11 @@ export default {
                         pubPrivKeypairValid: true
                     }
                 })
+                    //refactor this
+                dispatch(InteractDatabase.getPendingChannels(dispatch, correspondingPubAddress))
+                dispatch(InteractDatabase.getRequestedChannels(dispatch, correspondingPubAddress))
+                dispatch(InteractBlockchain.getOngoingChannels(dispatch, correspondingPubAddress))
+               
                 dispatch({
                     type: HANDLE_PRIVKEY_CHANGE,
                     payload: {

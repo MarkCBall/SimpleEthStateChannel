@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractReduxState from "../redux/actions/InteractReduxState";
-import InteractDatabase from "../redux/actions/InteractDatabase";
-import InteractBlockchain from "../redux/actions/InteractBlockchain";
+// import InteractDatabase from "../redux/actions/InteractDatabase";
+// import InteractBlockchain from "../redux/actions/InteractBlockchain";
 import {isValidAddress} from "ethereumjs-util";
 
 
@@ -82,12 +82,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))
 
             //can this be done better?
-            if (isValidAddress(Event.target.value)){
-                dispatch(InteractDatabase.getPendingChannels(dispatch, Event.target.value))
-                dispatch(InteractDatabase.getRequestedChannels(dispatch, Event.target.value))
-                dispatch(InteractBlockchain.getOngoingChannels(dispatch, Event.target.value))
-                
-            }
+            
         },
         handlePrivKeyChange: (Event) => {
             dispatch(InteractReduxState.handlePrivKeyChange(dispatch, Event.target.value))
