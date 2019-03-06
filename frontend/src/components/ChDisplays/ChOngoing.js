@@ -28,6 +28,8 @@ class ChOngoing extends Component {
                     className="btn btn-danger"
                     onClick={this.props.initChannelTermination}
                 > Initialize channel termination</button>
+                <br/>Terminating block#: Countdown___ submitted on nonce#:<br/>
+
                 <div className="row line-above">
                     <div className="col-6 col-solid">
                     <CurrentBalances/>
