@@ -1,6 +1,7 @@
 
 
 import { ONGOING_CHANNELS } from "../constants/InteractBlockchain";
+import { CONTRACT_ADDRESS } from "../constants/Other";
 const ethers = require('ethers')
 //init ethers
 //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
@@ -34,7 +35,7 @@ export default {
             //get a contract --> change this to existing contract later
             // let ContractFactory = await new ethers.ContractFactory(StateChannelAbi, StateChannelBytecode).connect(activeWallet);
             // let deployedContract = await ContractFactory.deploy()
-            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
+            let deployedaddress = CONTRACT_ADDRESS
             let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
             //console.log("deployed contract is ", deployedContract)
 
@@ -89,7 +90,7 @@ export default {
         return async (dispatch, getState) => {
             
             let activeWallet = new ethers.Wallet(getState().InteractReduxState.privKey).connect(provider)
-            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
+            let deployedaddress = CONTRACT_ADDRESS
             let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider).connect(activeWallet);
                 
             var DBData = getState().InteractDatabase;
@@ -141,7 +142,7 @@ export default {
         return async (dispatch) => {
 
             //move this outside function?
-            let deployedaddress = "0x4e06CA741418EacaEAcBf270cF90461b701440bd"
+            let deployedaddress = CONTRACT_ADDRESS
             let deployedContract = new ethers.Contract(deployedaddress,StateChannelAbi,provider);
             //console.log("deployed contract is ", deployedContract)
 
