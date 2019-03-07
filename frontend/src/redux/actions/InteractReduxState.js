@@ -45,6 +45,7 @@ export default {
                     dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
                 }
             }
+            dispatch({type: SET_ACTIVE_CHANNEL,payload: {channel:0}})
         }
     },
     setActiveChannel:(dispatch,channel, isOngoing) => {
@@ -94,6 +95,7 @@ export default {
                     } 
                 })
             }
+            dispatch({type: SET_ACTIVE_CHANNEL,payload: {channel:0}})
         }
     },
 
