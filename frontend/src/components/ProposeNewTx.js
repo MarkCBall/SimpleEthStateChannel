@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 
-//make this an import???
-const ethers = require('ethers')
+import {ethers} from "ethers";
 
 
 //import TxTokenRow from "./TxTokenRow";

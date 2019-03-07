@@ -2,8 +2,8 @@
 
 import { ONGOING_CHANNELS } from "../constants/InteractBlockchain";
 import { CONTRACT_ADDRESS } from "../constants/Other";
-const ethers = require('ethers')
-//init ethers
+import {ethers} from "ethers";
+
 //let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 let provider = ethers.getDefaultProvider('ropsten');
 

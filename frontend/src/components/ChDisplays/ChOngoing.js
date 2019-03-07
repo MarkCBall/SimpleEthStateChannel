@@ -11,8 +11,7 @@ import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 //relative imports
 import "./ChOngoing.css";
 
-//make this an import???
-const ethers = require('ethers')
+import {ethers} from "ethers";
 
 
 

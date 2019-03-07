@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {isValidAddress} from "ethereumjs-util";
 
-//make this an import???
-const ethers = require('ethers')
+import {ethers} from "ethers";
 
 
 

@@ -9,8 +9,7 @@ import InteractBlockchain from "./InteractBlockchain";
 //what does it mean to import itself??????? whoaaaa
 import InteractReduxState from "./InteractReduxState";
 
-//make this an import???
-const ethers = require('ethers')
+import {ethers} from "ethers";
 
 export default {
 
