@@ -10,7 +10,9 @@ import {isValidAddress} from "ethereumjs-util";
 
 class Login extends Component {
   
-
+    componentDidMount(){
+        this.props.updateChButtons(this.props.address);
+    }
 
     render() {
         return (
@@ -78,11 +80,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        updateChButtons: (addressSignedIn) => {
+            dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
+        },
         handleAddressChange: (Event) => {
-            dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))
-
-            //can this be done better?
-            
+            dispatch(InteractReduxState.handleAddressChange(dispatch, Event.target.value))  
         },
         handlePrivKeyChange: (Event) => {
             dispatch(InteractReduxState.handlePrivKeyChange(dispatch, Event.target.value))

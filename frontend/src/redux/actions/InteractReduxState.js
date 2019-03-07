@@ -6,10 +6,21 @@ import {isValidAddress} from "ethereumjs-util";
 import InteractDatabase from "./InteractDatabase";
 import InteractBlockchain from "./InteractBlockchain";
 
+//what does it mean to import itself??????? whoaaaa
+import InteractReduxState from "./InteractReduxState";
+
 //make this an import???
 const ethers = require('ethers')
 
 export default {
+
+    renderChButtons: (dispatch, addressSignedIn) => {
+        return (dispatch) => {
+            dispatch(InteractDatabase.getPendingChannels(dispatch, addressSignedIn))
+            dispatch(InteractDatabase.getRequestedChannels(dispatch, addressSignedIn))
+            dispatch(InteractBlockchain.getOngoingChannels(dispatch, addressSignedIn))
+        }
+    },
 
     handleAddressChange: (dispatch,addressSignedIn) => {
         //clean up redundant returns?
@@ -30,12 +41,8 @@ export default {
                         pubPrivKeypairValid: pubPrivKeypairValid
                     }
                 })
-
-                //refactor this
                 if (isValidAddress(addressSignedIn)){
-                    dispatch(InteractDatabase.getPendingChannels(dispatch, addressSignedIn))
-                    dispatch(InteractDatabase.getRequestedChannels(dispatch, addressSignedIn))
-                    dispatch(InteractBlockchain.getOngoingChannels(dispatch, addressSignedIn))
+                    dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
                 }
             }
         }
@@ -69,10 +76,7 @@ export default {
                         pubPrivKeypairValid: true
                     }
                 })
-                    //refactor this
-                dispatch(InteractDatabase.getPendingChannels(dispatch, correspondingPubAddress))
-                dispatch(InteractDatabase.getRequestedChannels(dispatch, correspondingPubAddress))
-                dispatch(InteractBlockchain.getOngoingChannels(dispatch, correspondingPubAddress))
+                dispatch(InteractReduxState.renderChButtons(dispatch, correspondingPubAddress))
                
                 dispatch({
                     type: HANDLE_PRIVKEY_CHANGE,
