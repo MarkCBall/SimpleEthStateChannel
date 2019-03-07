@@ -20,7 +20,12 @@ class SelectCh extends Component {
     render() {
         return (
             <div>
-                {/* <button onClick={() => console.log(this.props.PendingChannels)}>ConsolelogState</button><br/> */}
+                
+                <button className="btn btn-info" onClick={this.toggleDispNewCh.bind(this)}>Toggle Propose New Channel</button>
+                {this.state.ToggleDispNewCh &&
+                <ProposeNewCh/>
+                }
+                <br/>
 
 
                 Pending your acceptance:
@@ -43,13 +48,6 @@ class SelectCh extends Component {
                     })
                 }
                 <br/>
-
-                
-                <br/>
-                <button className="btn btn-info" onClick={this.toggleDispNewCh.bind(this)}>Toggle Propose New Channel</button>
-                {this.state.ToggleDispNewCh &&
-                <ProposeNewCh/>
-                }
                 
             </div>
         );

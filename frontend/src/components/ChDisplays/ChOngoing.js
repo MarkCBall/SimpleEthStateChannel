@@ -202,17 +202,7 @@ class ChOngoing extends Component {
     render() {
         return (
             <div>
-
-                <button onClick={()=>console.log(this.props.state)}>clikcme</button>
-
-                <button 
-                    className="btn btn-danger"
-                    onClick={this.props.initChannelTermination}
-                > Initialize channel termination
-                </button>
-                <br/>Terminating block#: Countdown___ submitted on nonce#:<br/><br/><br/>
-
-                
+                            
 
                 <div className="row">
                     <div className="col-4 col-solid"></div>
@@ -331,6 +321,18 @@ class ChOngoing extends Component {
                         {" "+this.props.u2TokenName} tokens
                     </div>
                 </div>
+
+
+
+                <br/><br/>
+                <button 
+                    className="btn btn-danger"
+                    onClick={this.props.initChannelTermination}
+                > Initialize channel termination
+                </button>
+                <br/>Terminating block#: Countdown___ submitted on nonce#:
+
+
 
 
             </div>
