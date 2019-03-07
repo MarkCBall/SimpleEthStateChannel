@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractBlockchain from "../../redux/actions/InteractBlockchain";
+//import CountersignTx from "../CountersignTx";
 
 // import CurrentBalances from "../ContractInfo/CurrentBalances";
 // import InitialBalances from "../ContractInfo/InitialBalances";
@@ -120,6 +121,81 @@ class ChOngoing extends Component {
     
         }
 
+        
+        signOrCounterSign = () =>{
+            if (
+                (this.props.userOneIsMe && this.props.sig1Unconfirmed !== undefined) 
+                ||
+                (!this.props.userOneIsMe && this.props.sig2Unconfirmed !== undefined)
+            )
+                return <div>Awaiting Countersignature</div>
+            return <button 
+                        onClick={this.countersignAndPostToDatabase} 
+                        className="btn btn-success"
+                    >Countersign
+                    </button>
+        }
+
+        //can this be put in a library?
+        signTxData = async () => {
+            // console.log(this.props.CID,
+            //     this.props.HighestNonce,
+            //     this.props.u1Bal,
+            //     this.props.u2Bal)
+    
+            //generate the hash to sign based on channel details
+            let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
+                ['uint', 'uint', 'uint', 'uint'],
+                [
+                    this.props.activeChannelNum,
+                    this.props.HighestNonce,
+                    this.props.u1BalUnconfirmed,
+                    this.props.u2BalUnconfirmed
+                ]
+            );
+            let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
+    
+            let firstwallet = new ethers.Wallet(this.props.privateKey)
+            let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
+            let sig = ethers.utils.splitSignature(flatSig);
+            //console.log("countersignTxSig",sig)
+            return sig
+        }
+    
+        countersignAndPostToDatabase = async () =>{
+            
+            // var u1Bal=this.props.u1Bal;
+            // var u2Bal=this.props.u2Bal;
+    
+            var body;
+            if (this.props.userOneIsMe){
+                body = {
+                    sig1: await this.signTxData() //   "put functioncall here - second signer"
+                }
+            }
+            else{
+                body = {
+                    sig2: await this.signTxData()//"put functioncall here - second signer"
+                }
+            }
+    
+            fetch("http://35.183.188.67:3001/Transaction/confirm", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "cid":this.props.activeChannelNum,
+                    "nonce":this.props.HighestNonce
+                },
+                body: JSON.stringify(body)
+            })
+            .then("success",console.log)
+            .catch("failure",console.log)
+        }
+
+
+        
+
 
     
 
@@ -165,51 +241,66 @@ class ChOngoing extends Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-4 col-solid">
-                        Countersigned Balances
-                        <br/>
-                        HighestSignedNonce:{this.props.HighestSignedNonce}
 
+                {(Number(this.props.HighestNonce) > 0) &&
+                    <div className="row">
+                        <div className="col-4 col-solid">
+                            HighestSignedNonce:{this.props.HighestSignedNonce}
+                            <br/>
+                            Countersigned Balances
+                                                </div>
+                        <div className="col-4 col-solid">
+                            {this.props.u1BalSigned+" "+this.props.u1TokenName} tokens
+                            <br/>
+                            {this.props.u2InitialTokenBal-this.props.u2BalSigned+""+this.props.u2TokenName} tokens
+                            <br/>
+                            {this.windowAlertBtn(this.props.sig1Signed)}
+                        </div>
+                        <div className="col-4 col-solid">
+                            {this.props.u1InitialTokenBal-this.props.u1BalSigned+""+this.props.u1TokenName} tokens
+                            <br/>
+                            {this.props.u2BalSigned+" "+this.props.u2TokenName} tokens
+                            <br/>
+                            {this.windowAlertBtn(this.props.sig2Signed)}
+                        </div>
                     </div>
-                    <div className="col-4 col-solid">
-                        {this.props.u1BalSigned+" "+this.props.u1TokenName} tokens
-                        <br/>
-                        {this.props.u2InitialTokenBal-this.props.u2BalSigned+""+this.props.u2TokenName} tokens
-                        <br/>
-                        {this.windowAlertBtn(this.props.sig1Signed)}
-                    </div>
-                    <div className="col-4 col-solid">
-                        {this.props.u1InitialTokenBal-this.props.u1BalSigned+""+this.props.u1TokenName} tokens
-                        <br/>
-                        {this.props.u2BalSigned+" "+this.props.u2TokenName} tokens
-                        <br/>
-                        {this.windowAlertBtn(this.props.sig2Signed)}
-                    </div>
-                </div>
+                }
 
-                <div className="row">
-                    <div className="col-4 col-solid">
-                        if stuff here<br/>Agree and Sign Btn // Awaiting counterignature txt
-                        <br/>
-                        HighestNonce:{this.props.HighestNonce}
-                    </div>
-                    <div className="col-4 col-solid">
-                        {this.props.u1BalUnconfirmed+" "+this.props.u1TokenName} tokens
-                        <br/>
-                        {this.props.u2InitialTokenBal-this.props.u2BalUnconfirmed+""+this.props.u2TokenName} tokens
-                        <br/>
-                        {this.windowAlertBtn(this.props.sig1Unconfirmed)}
-                    </div>
-                    <div className="col-4 col-solid">
-                        {this.props.u1InitialTokenBal-this.props.u1BalUnconfirmed+""+this.props.u1TokenName} tokens
-                        <br/>
-                        {this.props.u2BalUnconfirmed+" "+this.props.u2TokenName} tokens
-                        <br/>
-                        {this.windowAlertBtn(this.props.sig2Unconfirmed)}
-                        
-                    </div>
-                </div>
+
+
+
+
+                {(Number(this.props.HighestNonce) > Number(this.props.HighestSignedNonce)) &&
+                    <>
+                        <div className="row">
+                            <div className="col-4 col-solid">
+                                {this.signOrCounterSign()}
+                                <br/>
+                                HighestNonce:{this.props.HighestNonce}
+                            </div>
+                            <div className="col-4 col-solid">
+                                {this.props.u1BalUnconfirmed+" "+this.props.u1TokenName} tokens
+                                <br/>
+                                {this.props.u2InitialTokenBal-this.props.u2BalUnconfirmed+""+this.props.u2TokenName} tokens
+                                <br/>
+                                {this.windowAlertBtn(this.props.sig1Unconfirmed)}
+                            </div>
+                            <div className="col-4 col-solid">
+                                {this.props.u1InitialTokenBal-this.props.u1BalUnconfirmed+""+this.props.u1TokenName} tokens
+                                <br/>
+                                {this.props.u2BalUnconfirmed+" "+this.props.u2TokenName} tokens
+                                <br/>
+                                {this.windowAlertBtn(this.props.sig2Unconfirmed)} 
+                            </div>
+                        </div>
+                    </>
+                }
+                
+
+
+
+
+
 
                 <div className="row">
                     <div className="col-4 col-solid">
@@ -240,6 +331,7 @@ class ChOngoing extends Component {
                         {" "+this.props.u2TokenName} tokens
                     </div>
                 </div>
+
 
             </div>
         );
