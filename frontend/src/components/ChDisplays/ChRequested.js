@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import InitialBalances from "../ContractInfo/InitialBalances";
+import Initial from "./SubChDisplays/Initial";
 import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 
 
@@ -11,7 +11,7 @@ class ChRequested extends Component {
         return (
             <div>
                
-               <InitialBalances/>
+               <Initial/>
                <button 
                     className="btn btn-danger"
                     onClick={this.props.countersignChannel}

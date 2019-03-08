@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InteractBlockchain from "../../redux/actions/InteractBlockchain";
-//import CountersignTx from "../CountersignTx";
+import Initial from "./SubChDisplays/Initial";
+import Countersigned from "./SubChDisplays/Countersigned";
 
 // import CurrentBalances from "../ContractInfo/CurrentBalances";
 // import InitialBalances from "../ContractInfo/InitialBalances";
@@ -19,7 +20,7 @@ class ChOngoing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          ToggleDispNewTx: false,
+
           u1Bal:0,
           u2Bal:0
         }
@@ -45,11 +46,6 @@ class ChOngoing extends Component {
         }
     }
 
-
-    toggleDispNewTx = () => {
-        this.setState({ToggleDispNewTx:!this.state.ToggleDispNewTx})
-    }
-
     windowAlertBtn = (obj) => {
         if (obj !== undefined){
             return <button onClick={
@@ -63,6 +59,17 @@ class ChOngoing extends Component {
             </button>
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
         //bytes32 TxHash = keccak256(abi.encodePacked(CID,nonce,u1BalRetained,u2BalRetained));
@@ -135,46 +142,19 @@ class ChOngoing extends Component {
                     </button>
         }
 
-        //can this be put in a library?
-        signTxData = async () => {
-            // console.log(this.props.CID,
-            //     this.props.HighestNonce,
-            //     this.props.u1Bal,
-            //     this.props.u2Bal)
-    
-            //generate the hash to sign based on channel details
-            let hashedEncodedChannelData = ethers.utils.solidityKeccak256(
-                ['uint', 'uint', 'uint', 'uint'],
-                [
-                    this.props.activeChannelNum,
-                    this.props.HighestNonce,
-                    this.props.u1BalUnconfirmed,
-                    this.props.u2BalUnconfirmed
-                ]
-            );
-            let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
-    
-            let firstwallet = new ethers.Wallet(this.props.privateKey)
-            let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
-            let sig = ethers.utils.splitSignature(flatSig);
-            //console.log("countersignTxSig",sig)
-            return sig
-        }
+       
     
         countersignAndPostToDatabase = async () =>{
-            
-            // var u1Bal=this.props.u1Bal;
-            // var u2Bal=this.props.u2Bal;
-    
+   
             var body;
             if (this.props.userOneIsMe){
                 body = {
-                    sig1: await this.signTxData() //   "put functioncall here - second signer"
+                    sig1: await this.signNewTxData(this.props.u1BalUnconfirmed,this.props.u2BalUnconfirmed)
                 }
             }
             else{
                 body = {
-                    sig2: await this.signTxData()//"put functioncall here - second signer"
+                    sig2: await this.signNewTxData(this.props.u1BalUnconfirmed,this.props.u2BalUnconfirmed)
                 }
             }
     
@@ -201,58 +181,10 @@ class ChOngoing extends Component {
     render() {
         return (
             <div>
-                            
-
-                <div className="row">
-                    <div className="col-4 col-solid"></div>
-                    <div className="col-4 col-solid">
-                        u1Address<br/>{this.props.u1Address}
-                    </div>
-                    <div className="col-4 col-solid">
-                        u2Address<br/>{this.props.u2Address}
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-4 col-solid">
-                    Initial Balances
-                    </div>
-                    <div className="col-4 col-solid">
-                        {this.props.u1InitialTokenBal+" "+this.props.u1TokenName} tokens
-                        <br/>
-                        {"0 "+this.props.u2TokenName} tokens
-                    </div>
-                    <div className="col-4 col-solid">
-                        {"0 "+this.props.u1TokenName} tokens
-                        <br/>
-                        {this.props.u2InitialTokenBal+" "+this.props.u2TokenName} tokens
-                        
-                    </div>
-                </div>
-
-
-                {(Number(this.props.HighestNonce) > 0) &&
-                    <div className="row">
-                        <div className="col-4 col-solid">
-                            HighestSignedNonce:{this.props.HighestSignedNonce}
-                            <br/>
-                            Countersigned Balances
-                                                </div>
-                        <div className="col-4 col-solid">
-                            {this.props.u1BalSigned+" "+this.props.u1TokenName} tokens
-                            <br/>
-                            {this.props.u2InitialTokenBal-this.props.u2BalSigned+""+this.props.u2TokenName} tokens
-                            <br/>
-                            {this.windowAlertBtn(this.props.sig1Signed)}
-                        </div>
-                        <div className="col-4 col-solid">
-                            {this.props.u1InitialTokenBal-this.props.u1BalSigned+""+this.props.u1TokenName} tokens
-                            <br/>
-                            {this.props.u2BalSigned+" "+this.props.u2TokenName} tokens
-                            <br/>
-                            {this.windowAlertBtn(this.props.sig2Signed)}
-                        </div>
-                    </div>
+                <Initial/>
+                
+                {(Number(this.props.HighestSignedNonce) > 0) &&
+                    <Countersigned/>
                 }
 
 

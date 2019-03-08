@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //import { connect } from "react-redux";
-import InitialBalances from "../ContractInfo/InitialBalances";
+import Initial from "./SubChDisplays/Initial";
 
 
 class ChProposed extends Component {
@@ -10,7 +10,8 @@ class ChProposed extends Component {
         return (
             <div>
                
-               <InitialBalances/>
+               <Initial/>
+               <br/>
                <strong>Waiting for countersignature</strong>
             </div>
         );
