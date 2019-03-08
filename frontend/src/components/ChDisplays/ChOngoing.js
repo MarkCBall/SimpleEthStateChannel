@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import InteractBlockchain from "../../redux/actions/InteractBlockchain";
 import Initial from "./SubChDisplays/Initial";
 import Countersigned from "./SubChDisplays/Countersigned";
-
+import HalfSigned from "./SubChDisplays/HalfSigned";
 // import CurrentBalances from "../ContractInfo/CurrentBalances";
 // import InitialBalances from "../ContractInfo/InitialBalances";
 // import CountersignTx from "../CountersignTx";
@@ -46,28 +46,7 @@ class ChOngoing extends Component {
         }
     }
 
-    windowAlertBtn = (obj) => {
-        if (obj !== undefined){
-            return <button onClick={
-                    () => window.alert(
-                        JSON.stringify(
-                            obj
-                        )
-                    )
-                }>
-            Raw Signature
-            </button>
-        }
-    }
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -128,49 +107,11 @@ class ChOngoing extends Component {
         }
 
         
-        signOrCounterSign = () =>{
-            if (
-                (this.props.userOneIsMe && this.props.sig1Unconfirmed !== undefined) 
-                ||
-                (!this.props.userOneIsMe && this.props.sig2Unconfirmed !== undefined)
-            )
-                return <div>Awaiting Countersignature</div>
-            return <button 
-                        onClick={this.countersignAndPostToDatabase} 
-                        className="btn btn-success"
-                    >Countersign
-                    </button>
-        }
+
 
        
     
-        countersignAndPostToDatabase = async () =>{
-   
-            var body;
-            if (this.props.userOneIsMe){
-                body = {
-                    sig1: await this.signNewTxData(this.props.u1BalUnconfirmed,this.props.u2BalUnconfirmed)
-                }
-            }
-            else{
-                body = {
-                    sig2: await this.signNewTxData(this.props.u1BalUnconfirmed,this.props.u2BalUnconfirmed)
-                }
-            }
-    
-            fetch("http://35.183.188.67:3001/Transaction/confirm", {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "cid":this.props.activeChannelNum,
-                    "nonce":this.props.HighestNonce
-                },
-                body: JSON.stringify(body)
-            })
-            .then("success",console.log)
-            .catch("failure",console.log)
-        }
+
 
 
         
@@ -187,34 +128,8 @@ class ChOngoing extends Component {
                     <Countersigned/>
                 }
 
-
-
-
-
                 {(Number(this.props.HighestNonce) > Number(this.props.HighestSignedNonce)) &&
-                    <>
-                        <div className="row">
-                            <div className="col-4 col-solid">
-                                {this.signOrCounterSign()}
-                                <br/>
-                                HighestNonce:{this.props.HighestNonce}
-                            </div>
-                            <div className="col-4 col-solid">
-                                {this.props.u1BalUnconfirmed+" "+this.props.u1TokenName} tokens
-                                <br/>
-                                {this.props.u2InitialTokenBal-this.props.u2BalUnconfirmed+""+this.props.u2TokenName} tokens
-                                <br/>
-                                {this.windowAlertBtn(this.props.sig1Unconfirmed)}
-                            </div>
-                            <div className="col-4 col-solid">
-                                {this.props.u1InitialTokenBal-this.props.u1BalUnconfirmed+""+this.props.u1TokenName} tokens
-                                <br/>
-                                {this.props.u2BalUnconfirmed+" "+this.props.u2TokenName} tokens
-                                <br/>
-                                {this.windowAlertBtn(this.props.sig2Unconfirmed)} 
-                            </div>
-                        </div>
-                    </>
+                    <HalfSigned/>
                 }
                 
 

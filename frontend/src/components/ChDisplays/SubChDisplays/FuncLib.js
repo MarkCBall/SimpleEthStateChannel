@@ -10,7 +10,7 @@ export default {
         );
         let ArrayifiedHashedEncodedChannelData = ethers.utils.arrayify(hashedEncodedChannelData)
         let firstwallet = new ethers.Wallet(privateKey)
-        let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)//.then(console.log)
+        let flatSig = await firstwallet.signMessage(ArrayifiedHashedEncodedChannelData)
         let sig = ethers.utils.splitSignature(flatSig);
         return sig
     }
