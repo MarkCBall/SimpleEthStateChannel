@@ -16,7 +16,7 @@ class ProposeNewCh extends Component {
             u2TokenName:"Matts",
             u1InitialTokenBal:"30",
             u2InitialTokenBal:"50",
-            InstanceOfChannelProposed:"0"
+            
         }
     }
 
@@ -71,11 +71,7 @@ class ProposeNewCh extends Component {
             })
     }
 
-    handleClick() {
-    	this.setState((prevState) => ({
-      	   InstanceOfChannelProposed: prevState.InstanceOfChannelProposed + 1
-        }));
-    }
+   
 
     handleSubmit = async () => {
        
@@ -270,7 +266,8 @@ class ProposeNewCh extends Component {
 function mapStateToProps(state) {
     return {
         u1Address: state.InteractReduxState.addressSignedIn,
-        privateKey : state.InteractReduxState.privKey
+        privateKey : state.InteractReduxState.privKey,
+        show_new_channel_form: state.InteractReduxState.showNewChannelForm
 
     }
 }

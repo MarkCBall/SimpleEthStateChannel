@@ -1,6 +1,7 @@
 import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
 import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
+import {HANDLE_SHOWNEWCHANNELFORM_TOGGLE} from "../constants/InteractReduxState";
 
 
 
@@ -9,7 +10,8 @@ const initialState = {
   addressIsValid:false,
   activeChannel:-1,
   privKey:"0xf942d5d524ec07158df4354402bfba8d928c99d0ab34d0799a6158d56156d986",
-  pubPrivKeypairValid:true
+  pubPrivKeypairValid:true,
+  showNewChannelForm: false
 };
 
 export default function(state = initialState, action) {
@@ -34,6 +36,12 @@ export default function(state = initialState, action) {
         ...state,
         privKey:action.payload.privKey,
         pubPrivKeypairValid:action.payload.pubPrivKeypairValid
+    }
+
+    case HANDLE_SHOWNEWCHANNELFORM_TOGGLE:
+    return {
+        ...state,
+        showNewChannelForm:action.payload
     }
 
     default:
