@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {isValidAddress} from "ethereumjs-util";
-
 import {ethers} from "ethers";
+
 
 
 
@@ -76,15 +76,9 @@ class ProposeNewCh extends Component {
     handleSubmit = async () => {
        
         if (window.confirm("Do you really want to propose this channel?")) { 
-            //what is the purpose of instanceofChannelProposed?
-            if (this.InstanceOfChannelProposed !== 0) {
-                window.confirm("You've already proposed this channel at this session.Do you still want to continue?");
-    
-            }
+         
+        }
 
-            //window.open("exit.html", "Thanks for Visiting!");
-            this.handleClick();
-          }   
         if ((isValidAddress(this.props.u1Address,) && isValidAddress(this.state.u2Address)) 
         && (this.state.u1TokenName.length > 0 && this.state.u1TokenName.length > 0 )) 
         {
@@ -109,10 +103,12 @@ class ProposeNewCh extends Component {
         })
         .then("success",console.log)
         .catch("failure",console.log)
+
+        
         }
         
         else
-        console.log("Please check addresses and/or token names")
+        console.log("Please check addresses and/or token names");
     }
 
     // signChannelDataWithMetamask = async () => {
@@ -250,12 +246,22 @@ class ProposeNewCh extends Component {
                 /><br/>
                 <br></br>
 
-                
-                ((Fill out Capcha to)) &nbsp; &nbsp;
-                <button 
-                    onClick={this.handleSubmit}
-                    className="btn btn-success"
-                >Propose New Channel->(sign as u1)</button>
+                {/* {isValidAddress(this.state.u2Address)
+                ?
+                    <div><button onClick={this.handleSubmit}{...this.handleTogglePNC }
+                    className="btn btn-success">Propose New Channel->(sign as u1)</button></div>
+                :
+                    null} */}
+
+                {isValidAddress(this.state.u2Address)?
+                    document.getElementById("myBtn").disabled = false
+                    :
+                    null
+
+                }
+                <button id= "myBtn"onClick={this.handleSubmit}{...this.handleTogglePNC }
+                    className="btn btn-success" disabled>Propose New Channel->(sign as u1)</button>
+
                 
             </div>
         );
@@ -267,8 +273,7 @@ function mapStateToProps(state) {
     return {
         u1Address: state.InteractReduxState.addressSignedIn,
         privateKey : state.InteractReduxState.privKey,
-        show_new_channel_form: state.InteractReduxState.showNewChannelForm
-
+        
     }
 }
 

@@ -1,6 +1,7 @@
 import { CHANGE_ADDRESS_TEXT } from "../constants/InteractReduxState";
 import { SET_ACTIVE_CHANNEL } from "../constants/InteractReduxState";
 import { HANDLE_PRIVKEY_CHANGE } from "../constants/InteractReduxState";
+import {HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE} from "../constants/InteractReduxState";
 import {isValidAddress} from "ethereumjs-util";
 
 import InteractDatabase from "./InteractDatabase";
@@ -44,7 +45,9 @@ export default {
                     dispatch(InteractReduxState.renderChButtons(dispatch, addressSignedIn))
                 }
             }
-            dispatch({type: SET_ACTIVE_CHANNEL,payload: {channel:0}})
+            dispatch({
+                type: SET_ACTIVE_CHANNEL,
+                payload: {channel:0}})
         }
     },
     setActiveChannel:(dispatch,channel, isOngoing) => {
@@ -97,5 +100,18 @@ export default {
             dispatch({type: SET_ACTIVE_CHANNEL,payload: {channel:0}})
         }
     },
+
+    handleTogglePNC:(dispatch, showNewChannelForm ) => { //meaning: handleTogglePrroposeNewChannel
+        return (dispatch) => {
+           
+            dispatch({
+                type: HANDLE_SHOW_NEW_CHANNEL_FORM_TOGGLE,
+                payload: {
+                    showNewChannelForm: !showNewChannelForm
+
+                }
+            })
+        }
+    }
 
 }
