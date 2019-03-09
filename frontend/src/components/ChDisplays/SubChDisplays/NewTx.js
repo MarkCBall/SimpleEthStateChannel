@@ -41,7 +41,7 @@ class NewTx extends Component {
         let body;
         let sig = await FuncLib.signTxData(
             this.props.activeChannelNum,
-            this.props.HighestNonce,
+            this.props.HighestNonce+1,
             this.state.u1Bal,
             this.state.u2Bal,
             this.props.privateKey
