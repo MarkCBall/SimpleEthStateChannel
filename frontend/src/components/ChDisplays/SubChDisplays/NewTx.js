@@ -60,7 +60,7 @@ class NewTx extends Component {
                 u2Bal: this.state.u2Bal
             }
         }
-        fetch("http://35.183.188.67:3001/Transaction/new", {
+        fetch("http://52.60.66.253:3000/Transaction/new", {
             method: "POST",
             mode: "cors",
             headers: {

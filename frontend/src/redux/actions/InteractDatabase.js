@@ -11,7 +11,7 @@ export default {
 
     getPendingChannels: (dispatch, address) => {
         return (dispatch) => {
-            fetch("http://35.183.188.67:3001/Channel/pending", {
+            fetch("http://52.60.66.253:3000/Channel/pending", {
                 method: "GET",
                 mode: "cors", 
                 headers: {
@@ -29,7 +29,7 @@ export default {
     },
     getRequestedChannels: (dispatch, address) => {
         return (dispatch) => {
-            fetch("http://35.183.188.67:3001/Channel/requested", {
+            fetch("http://52.60.66.253:3000/Channel/requested", {
                 method: "GET",
                 mode: "cors", 
                 headers: {
@@ -49,7 +49,7 @@ export default {
     getChannelDetails:(dispatch, CID) => {
         return (dispatch, getState) => {
             var addressSignedIn = getState().InteractReduxState.addressSignedIn;
-            fetch("http://35.183.188.67:3001/Channel/", {
+            fetch("http://52.60.66.253:3000/Channel/", {
                 method: "GET",
                 mode: "cors", 
                 headers: {
@@ -84,7 +84,7 @@ export default {
 
     getHighestNonce: (dispatch, CID) =>{
         return (dispatch, getState) => {
-            fetch("http://35.183.188.67:3001/Transaction/HighestNonce", {
+            fetch("http://52.60.66.253:3000/Transaction/HighestNonce", {
                 method: "GET",
                 mode: "cors", 
                 headers: {
@@ -100,7 +100,7 @@ export default {
                     payload: HighestNonce
                 })
 
-                fetch("http://35.183.188.67:3001/Transaction/getTx", {
+                fetch("http://52.60.66.253:3000/Transaction/getTx", {
                     method: "GET",
                     mode: "cors", 
                     headers: {
@@ -123,7 +123,7 @@ export default {
 
     getHighestSignedNonce: (dispatch, CID) =>{
         return (dispatch, getState) => {
-            fetch("http://35.183.188.67:3001/Transaction/HighestSignedNonce", {
+            fetch("http://52.60.66.253:3000/Transaction/HighestSignedNonce", {
                 method: "GET",
                 mode: "cors", 
                 headers: {
@@ -137,7 +137,7 @@ export default {
                     payload: HighestSignedNonce
                 })
 
-                fetch("http://35.183.188.67:3001/Transaction/getTx", {
+                fetch("http://52.60.66.253:3000/Transaction/getTx", {
                     method: "GET",
                     mode: "cors", 
                     headers: {

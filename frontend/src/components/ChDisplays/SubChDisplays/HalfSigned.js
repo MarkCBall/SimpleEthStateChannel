@@ -44,7 +44,7 @@ class HalfSigned extends Component {
         }
         console.log(body)
 
-        fetch("http://35.183.188.67:3001/Transaction/confirm", {
+        fetch("http://52.60.66.253:3000/Transaction/confirm", {
             method: "POST",
             mode: "cors",
             headers: {
